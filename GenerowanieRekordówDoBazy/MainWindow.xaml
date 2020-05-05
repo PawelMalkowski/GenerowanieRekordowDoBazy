@@ -1,0 +1,52 @@
+﻿<Window x:Class="GenerowanieRekordówDoBazy.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:fa="http://schemas.fontawesome.io/icons/"
+        xmlns:local="clr-namespace:GenerowanieRekordówDoBazy"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="850" Width="400" Initialized="Window_Initialized">
+    <Grid Height="840">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="47*"/>
+            <RowDefinition Height="73*"/>
+        </Grid.RowDefinitions>
+
+        <Label Content="Adres" FontSize="16" HorizontalContentAlignment="Center"  Height="40"  Margin="10,107,233,182" />
+        <Label Content="Akcesorie" FontSize="16" HorizontalContentAlignment="Center"  Height="40" Margin="10,147,233,142" />
+        <Label Content="Firma" FontSize="16" HorizontalContentAlignment="Center" Height="40" Margin="10,197,233,92" />
+        <Label Content="Gatunek" FontSize="16" HorizontalContentAlignment="Center" Height="40" Margin="10,242,233,47" />
+        <Label Content="Klient" FontSize="16" HorizontalContentAlignment="Center" Height="40" Margin="10,287,233,2" />
+        <Label Content="Kraj" FontSize="16" HorizontalContentAlignment="Center" Height="40" Margin="10,322,233,478" Grid.RowSpan="2" />
+        <Label Content="Podgatunek" FontSize="16" HorizontalContentAlignment="Center" Height="40" Margin="10,38,233,433" Grid.Row="1" />
+        <Label Content="Pokarm" FontSize="16" HorizontalContentAlignment="Center" Height="40" Margin="10,88,233,383" Grid.Row="1" />
+        <Label Content="Pokarm-Gatunek" FontSize="16" HorizontalContentAlignment="Center"  Height="40" Margin="10,133,233,338" Grid.Row="1" />
+        <Label Content="Produkt-Zamowienie" FontSize="16" HorizontalContentAlignment="Center" Height="40" Margin="-5,173,218,298" Grid.Row="1" />
+        <Label Content="Użytkownik-Firma" FontSize="16" HorizontalContentAlignment="Center" Height="40" Margin="10,213,233,258" Grid.Row="1" />
+        <Label Content="Pracownik" FontSize="16" HorizontalContentAlignment="Center" Height="40" Margin="10,263,233,208" Grid.Row="1" />
+        <Label Content="Uzytkownik" FontSize="16" HorizontalContentAlignment="Center" Height="40" Margin="10,308,233,163" Grid.Row="1" />
+        <Label Content="Zamowienie" FontSize="16" HorizontalContentAlignment="Center" Height="40" Margin="10,353,233,118" Grid.Row="1" />
+        <TextBox  x:Name="Adres" Text="" Margin="167,107,10,192" TextWrapping="Wrap" Height="30" FontSize="20"/>
+        <TextBox  x:Name="Akcesorie" Text="" Margin="167,152,10,147" TextWrapping="Wrap" Height="30" FontSize="20"/>
+        <TextBox  x:Name="Firma" Text="" Margin="167,197,10,102" TextWrapping="Wrap" Height="30" FontSize="20"/>
+        <TextBox  x:Name="Gatunek" Text="" Margin="167,242,10,57" TextWrapping="Wrap" Height="30" FontSize="20"/>
+        <TextBox  x:Name="Klient" Text="" Margin="167,287,10,12" TextWrapping="Wrap" Height="30" FontSize="20"/>
+        <TextBox  x:Name="Kraj" Text="" Margin="167,327,10,483" TextWrapping="Wrap" Height="30" FontSize="20" Grid.RowSpan="2"/>
+        <TextBox  x:Name="Podgatunek" Text="" Margin="167,43,10,438" TextWrapping="Wrap" Height="30" FontSize="20" Grid.Row="1"/>
+        <TextBox  x:Name="Pokarm" Text="" Margin="167,93,10,388" TextWrapping="Wrap" Height="30" FontSize="20" Grid.Row="1"/>
+        <TextBox  x:Name="PokarmGatunek" Text="" Margin="167,133,10,348" TextWrapping="Wrap" Height="30" FontSize="20" Grid.Row="1"/>
+        <TextBox  x:Name="ProduktZamowienie" Text="" Margin="167,173,10,308" TextWrapping="Wrap" Height="30" FontSize="20" Grid.Row="1"/>
+        <TextBox  x:Name="UzytkownikFirma" Text="" Margin="167,213,10,268" TextWrapping="Wrap" Height="30" FontSize="20" Grid.Row="1"/>
+        <TextBox  x:Name="Pracownik" Text="" Margin="167,263,10,218" TextWrapping="Wrap" Height="30" FontSize="20" Grid.Row="1"/>
+        <TextBox  x:Name="Uzytkownik" Text="" Margin="167,308,10,173" TextWrapping="Wrap" Height="30" FontSize="20" RenderTransformOrigin="0.732,0.667" Grid.Row="1"/>
+        <TextBox  x:Name="Zamowienie" Text="" Margin="167,353,10,128" TextWrapping="Wrap" Height="30" FontSize="20" Grid.Row="1"/>
+        <Label Content="Zwierze" FontSize="16" HorizontalContentAlignment="Center" Height="40" Margin="10,398,233,73" Grid.Row="1" />
+        <TextBox  x:Name="Zwierze" Text="" Margin="167,398,10,83" TextWrapping="Wrap" Height="30" FontSize="20" Grid.Row="1"/>
+        <Button x:Name="Fillbutton" Content="Loading.." HorizontalAlignment="Left" Margin="278,433,0,0" VerticalAlignment="Top" Height="37" Width="84" Click="Fillbutton_Click" Grid.Row="1"/>
+        <CheckBox x:Name="ClearDb" Content="Wyczyść bazę" HorizontalAlignment="Left" Margin="32,445,0,0" VerticalAlignment="Top" Grid.Row="1"/>
+
+
+
+    </Grid>
+</Window>
