@@ -65,7 +65,7 @@ namespace GenerowanieRekordówDoBazy
          
                 OracleCommand sel = new OracleCommand();
                 List<int> indeks = new List<int>();
-                String select = "select " + column + " as ForeignKey from " + table;
+                String select = "select " + column + " as ForeignKey from " + table + " order by ForeignKey";
                 sel.Connection = connection;
                 sel.CommandText = select;
                 using (OracleDataReader reader = sel.ExecuteReader())
@@ -115,7 +115,7 @@ namespace GenerowanieRekordówDoBazy
 
             OracleCommand sel = new OracleCommand();
             List<string> indeks = new List<string>();
-            String select = "select " + column + " as ForeignKey from " + table;
+            String select = "select " + column + " as ForeignKey from " + table + " order by ForeignKey";
             sel.Connection = connection;
             sel.CommandText = select;
             using (OracleDataReader reader = sel.ExecuteReader())
@@ -140,7 +140,7 @@ namespace GenerowanieRekordówDoBazy
 
             OracleCommand sel = new OracleCommand();
            HashSet<int> indeks = new HashSet<int>();
-            String select = "select " + column + " as ForeignKey from " + table;
+            String select = "select " + column + " as ForeignKey from " + table + " order by ForeignKey";
             sel.Connection = connection;
             sel.CommandText = select;
             using (OracleDataReader reader = sel.ExecuteReader())
@@ -165,7 +165,7 @@ namespace GenerowanieRekordówDoBazy
 
             OracleCommand sel = new OracleCommand();
             HashSet<string> indeks = new HashSet<string>();
-            String select = "select " + column + " as ForeignKey from " + table;
+            String select = "select " + column + " as ForeignKey from " + table + " order by ForeignKey";
             sel.Connection = connection;
             sel.CommandText = select;
             using (OracleDataReader reader = sel.ExecuteReader())
