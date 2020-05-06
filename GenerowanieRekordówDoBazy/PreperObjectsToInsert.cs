@@ -52,7 +52,7 @@ namespace GenerowanieRekordówDoBazy
         private void FillTableGatunek(int ileRekordów)
         {
             HashSet<GatunekRandomize> GatunekToFilleTable = new HashSet<GatunekRandomize>();
-            int gatuneklistLastId = allLists.LastIdPodgatuenk;
+            int gatuneklistLastId = allLists.PodgatuenkLastId;
             if (allLists.GatunkiIdList.Count == 0) gatuneklistLastId = 0;
             else gatuneklistLastId = allLists.GatunkiIdList[allLists.GatunkiIdList.Count - 1];
             for (int i = 0; i < ileRekordów; ++i)
@@ -67,7 +67,7 @@ namespace GenerowanieRekordówDoBazy
 
         private void FillTablePodGatunek(int ileRekordów)
         {
-            int podgatunekLastid=allLists.LastIdPodgatuenk;
+            int podgatunekLastid=allLists.PodgatuenkLastId;
 
             HashSet<PodgatunekRandomize> PodGatunekToFilleTable = new HashSet<PodgatunekRandomize>();
             for (int i = 0; i < ileRekordów; ++i)
@@ -137,7 +137,7 @@ namespace GenerowanieRekordówDoBazy
         private void FillTablePracownik(int ileRekordów)
         {
             HashSet<PracownikRandomize> UzytkownicyToFilleTable = new HashSet<PracownikRandomize>();
-            int maxindex = allLists.PracownikCount;
+            int maxindex = allLists.PracownikLastId;
             for (int i = 0; i < ileRekordów; ++i)
             {
                 PracownikRandomize pracownik = new PracownikRandomize(++maxindex,allLists.ImionaiList,allLists.AdresyIdList,allLists.przedzial,allLists.PESELHashSet,allLists.PracownicyEmaileHashSet);
@@ -154,7 +154,7 @@ namespace GenerowanieRekordówDoBazy
         private void FillTableKlient(int ileRekordów)
         {
             HashSet<KlientRandomize> KlienciToFilleTable = new HashSet<KlientRandomize>();
-            int maxindex = allLists.KlientCount;
+            int maxindex = allLists.KlientLastId;
             for (int i = 0; i < ileRekordów; ++i)
             {
                 KlientRandomize klient = new KlientRandomize(++maxindex,allLists.ImionaiList, allLists.AdresyIdList);
@@ -208,7 +208,7 @@ namespace GenerowanieRekordówDoBazy
 
         private void FillTablePokarmGatunek(int ileRekordów)
         {
-            int maxindex=allLists.PokarmGatunekCount;
+            int maxindex=allLists.PokarmGatunekLastId;
        
             HashSet<Posrednia_Pokarm_GatunekRandomize> PokarmGatunekToFilleTable = new HashSet<Posrednia_Pokarm_GatunekRandomize>();
             HashSet<long> CombinationInDb=  allLists.AddCombinationAlreadyInDataBase(allLists.CombinatioInDBPokarmGatunek);
@@ -218,7 +218,6 @@ namespace GenerowanieRekordówDoBazy
                 PokarmGatunekToFilleTable.Add(pokarmGatunek);
             }
             insertObjectToDatabase.InsertPokarmGatunek(PokarmGatunekToFilleTable);
-            allLists.PokarmGatunekList.Clear();
             allLists.PokarmyIdList.Clear();
         }
 
@@ -240,7 +239,7 @@ namespace GenerowanieRekordówDoBazy
 
         private void FillTableUzytkownikFirma(int ileRekordów)
         {
-            int maxindex = allLists.UzytkownikFirmaCount;
+            int maxindex = allLists.UzytkownikFirmaLastId;
             HashSet<Posrednia_Uzytkownik_FirmaRadmoize> UzytkownikFirmaToFilleTable = new HashSet<Posrednia_Uzytkownik_FirmaRadmoize>();
             HashSet<long> CombinationInDb = allLists.AddCombinationAlreadyInDataBase(allLists.CombinatioInDBUzytkownikFirma);
             for (int i = 0; i < ileRekordów; ++i)
@@ -250,7 +249,6 @@ namespace GenerowanieRekordówDoBazy
             }
             insertObjectToDatabase.InsertUzytkownikFirma(UzytkownikFirmaToFilleTable);
             allLists.UzytkownicyIdList.Clear();
-            allLists.UzytkownikFirmaList.Clear();
         }
 
         private void FillTableZwierzeta(int ileRekordów)
@@ -291,7 +289,6 @@ namespace GenerowanieRekordówDoBazy
             insertObjectToDatabase.InsertProduktZamowienie(ProduktZamowienieToFilleTable);
             allLists.ProduktyIdList.Clear();
             allLists.ZamowieniaIdList.Clear();
-            allLists.ProduktZamowieniaList.Clear();
         }
 
 
@@ -306,9 +303,6 @@ namespace GenerowanieRekordówDoBazy
             allLists.PodGatunkiHashSet.Clear();
             allLists.KrajeIdList.Clear();
             allLists.GatunkiIdList.Clear();
-            allLists.PokarmGatunekList.Clear();
-            allLists.ProduktZamowieniaList.Clear();
-            allLists.UzytkownikFirmaList.Clear();
             allLists.LoginyHashSet.Clear();
             allLists.NipHashSet.Clear();
             allLists.PESELHashSet.Clear();
@@ -319,12 +313,12 @@ namespace GenerowanieRekordówDoBazy
             allLists.CombinatioInDBUzytkownikFirma.Clear();
             allLists.GatuenkPodgatunekList.Clear();
             allLists.PokarmyIdList.Clear();
-            allLists.PracownikCount = 0;
-            allLists.LastIdPodgatuenk = 0;
-            allLists.UzytkownikFirmaCount = 0;
+            allLists.PracownikLastId = 0;
+            allLists.PodgatuenkLastId = 0;
+            allLists.UzytkownikFirmaLastId = 0;
             allLists.ProduktZamowienieCount = 0;
-            allLists.PokarmGatunekCount = 0;
-            allLists.KlientCount = 0;
+            allLists.PokarmGatunekLastId = 0;
+            allLists.KlientLastId = 0;
         }
         private void ClearDataBase()
         {

@@ -162,5 +162,32 @@ namespace GenerowanieRekordówDoBazy
             int LastId = DbConnection.GetLastId("AKCESORIE", "ID");
             return LastId;
         }
+
+        public int GetCountAkceosire()
+        {
+            int Count = DbConnection.GetCount("AKCESORIE");
+            return Count;
+        }
+        public int GetCountKlient()
+        {
+            int Count = DbConnection.GetCount("KLIENT");
+            return Count;
+        }
+        public int GetCountKraj()
+        {
+            int Count = DbConnection.GetCount("KRAJ");
+            return Count;
+        }
+        public int GetCountPodgatunek()
+        {
+            int Count = DbConnection.GetCount("PODGATUNEK");
+            return Count;
+        }
+
+        public int GetCountPracownik()
+        {
+            int Count = DbConnection.GetCount("PRACOWNIK");
+            return Count;
+        }
     }
 }

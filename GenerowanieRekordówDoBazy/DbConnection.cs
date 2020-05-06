@@ -110,6 +110,31 @@ namespace GenerowanieRekordówDoBazy
             }
             return lastId;
         }
+        public int GetCount(string table)
+        {
+
+            OracleCommand sel = new OracleCommand();
+            int lastId = 0;
+            String select = "select count(*) as ForeignKey from " + table;
+            sel.Connection = connection;
+            sel.CommandText = select;
+            using (OracleDataReader reader = sel.ExecuteReader())
+            {
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        int index = reader.GetOrdinal("ForeignKey");
+
+                        if (!reader.IsDBNull(index))
+                        {
+                            lastId = (Convert.ToInt32(reader.GetValue(index)));
+                        }
+                    }
+                }
+            }
+            return lastId;
+        }
         public List<string> GetStringList(string table, string column)
         {
 

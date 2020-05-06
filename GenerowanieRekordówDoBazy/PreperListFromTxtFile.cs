@@ -64,7 +64,6 @@ namespace GenerowanieRekordówDoBazy
             List<string> ScriptList = new List<string>();
             string script;
             string[] Separate;
-            int liczba = 0;
 
             using (StreamReader sr = new StreamReader("skryptdb.txt"))
             {

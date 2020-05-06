@@ -25,7 +25,6 @@ namespace GenerowanieRekordówDoBazy
     public partial class MainWindow : Window
     {
         PreperAllListForRandomize Lists;
-        Button button;
         TextBox[] TextBoxs;
         private static readonly Regex _regex = new Regex("[^0-9]+");
         private static bool IsTextAllowed(string text)

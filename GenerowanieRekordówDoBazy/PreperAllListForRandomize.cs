@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace GenerowanieRekordówDoBazy
 {
@@ -20,12 +18,6 @@ namespace GenerowanieRekordówDoBazy
         public HashSet<string> PodGatunkiHashSet;
         public List<int> KrajeIdList;
         public List<int> GatunkiIdList;
-        public List<List<int>> PokarmGatunekList;
-        public List<List<int>> ProduktZamowieniaList;
-        public List<List<int>> UzytkownikFirmaList;
-        public List<List<int>> PokarmGatunekListWithoutRemoving;
-        public List<List<int>> ProduktZamowieniaListWithoutRemoving;
-        public List<List<int>> UzytkownikFirmaListWithoutRemoving;
         public HashSet<string> LoginyHashSet;
         public HashSet<string> EmaileHashSet;
         public HashSet<string> NipHashSet;
@@ -43,15 +35,23 @@ namespace GenerowanieRekordówDoBazy
         public List<int> StatusyList;
         public List<int> WysylkaList;
         public HashSet<KeyValuePair<int, int>> GatuenkPodgatunekList;
-        public int LastIdPodgatuenk;
-        public int KrajeCount;
-        public int PracownikCount;
-        public int KlientCount;
-        public int PokarmGatunekCount;
-        public int UzytkownikFirmaCount;
+        public int PodgatuenkLastId;
+        public int KrajLastId;
+        public int PracownikLastId;
+        public int KlientLastId;
+        public int PokarmGatunekLastId;
+        public int UzytkownikFirmaLastId;
         public int ProduktZamowienieCount;
         public int przedzial;
-        public int AkcesorieCaount;
+        public int AkcesorieLastId;
+        public int CountAkcesorie;
+        public int CountKlient;
+        public int CountKraj;
+        public int CountPodgatunek;
+        public int CountPokarmGatunek;
+        public int CountProduktZamowienie;
+        public int CountUzytkownikFirma;
+        public int CountPracownik;
         public string[] ScriptList;
 
         public PreperAllListForRandomize()
@@ -83,22 +83,26 @@ namespace GenerowanieRekordówDoBazy
             StatusyList = FromDateBase.GetStatusyList();
             WysylkaList = FromDateBase.GetWysylkaList();
             GatuenkPodgatunekList = FromDateBase.GetGatuenkPodgatunekList();
-            LastIdPodgatuenk = FromDateBase.GetLastIdPodgatunek();
-            PracownikCount = FromDateBase.GetLastIdPracownik();
-            KlientCount = FromDateBase.GetLastIdKlient();
-            PokarmGatunekCount = FromDateBase.GetLastIdPokarmGatunek();
-            UzytkownikFirmaCount = FromDateBase.GetLastIdUzytkownikFirma();
+            PodgatuenkLastId = FromDateBase.GetLastIdPodgatunek();
+            PracownikLastId = FromDateBase.GetLastIdPracownik();
+            KlientLastId = FromDateBase.GetLastIdKlient();
+            PokarmGatunekLastId = FromDateBase.GetLastIdPokarmGatunek();
+            UzytkownikFirmaLastId = FromDateBase.GetLastIdUzytkownikFirma();
             ProduktZamowienieCount = FromDateBase.GetLastIdUzytkownikFirma();
-            AkcesorieCaount = FromDateBase.GetLastIAkcesoria();
+            AkcesorieLastId = FromDateBase.GetLastIAkcesoria();
             przedzial = FromTxt.podzial;
-
-        }
+            CountAkcesorie = FromDateBase.GetCountAkceosire();
+            CountKlient = FromDateBase.GetCountKlient();
+            CountKraj = FromDateBase.GetCountKraj();
+            CountPodgatunek = FromDateBase.GetCountPodgatunek();
+            CountPracownik = FromDateBase.GetCountPracownik();
+    }
         public List<string> KrajeListCreate()
         {
             List<string> AllCountries = FromTxt.GetKrajeList();
             List<string> AlrredyInDataBase = FromDateBase.GetKrajeList();
             List<string> Reamining= AllCountries.Except(AlrredyInDataBase).ToList();
-            KrajeCount = Reamining.Count;
+            KrajLastId = Reamining.Count;
             return Reamining;
         }
 
