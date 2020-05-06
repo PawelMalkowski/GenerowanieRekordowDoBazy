@@ -8,28 +8,28 @@ namespace GenerowanieRekordówDoBazy
         private static readonly DbConnection DbConnection = new DbConnection();
         private PreperAllListForRandomize allLists;
         private static readonly InsertObjectToDatabase insertObjectToDatabase = new InsertObjectToDatabase();
-        public PreperObjectsToInsert(PreperAllListForRandomize Lists, bool clearDatabese)
+        public PreperObjectsToInsert(PreperAllListForRandomize Lists, bool clearDatabese, Dictionary<string,uint> ValuesToInsert)
         {
             allLists = Lists;
             if (clearDatabese) PreperEmptyDatabase();
-            FillTableKraje(243);
-            FillTableGatunek(24000);
-            FillTablePodGatunek(24000);
-            FillTableAdres(24000);
-            FillTableFirma(24000);
-             FillTableUzytkownik(24000);
-            FillTablePracownik(24000);
-            FillTableKlient(24000);
-            FillTableAkcesorie(24000);
-            FillTablePokarm(24000);
-            FillTablePokarmGatunek(24000);
-            FillTableZamowienia(24000);
-            FillTableUzytkownikFirma(24000);
-            FillTableZwierzeta(24000);
-            FillTableProduktZamowienie(24000);
+            FillTableKraje(ValuesToInsert["Kraj"]);
+            FillTableGatunek(ValuesToInsert["Gatunek"]);
+            FillTablePodGatunek(ValuesToInsert["Podgatunek"]);
+            FillTableAdres(ValuesToInsert["Adres"]);
+            FillTableFirma(ValuesToInsert["Firma"]);
+             FillTableUzytkownik(ValuesToInsert["Uzytkownik"]);
+            FillTablePracownik(ValuesToInsert["Pracownik"]);
+            FillTableKlient(ValuesToInsert["Klient"]);
+            FillTableAkcesorie(ValuesToInsert["Akcesorie"]);
+            FillTablePokarm(ValuesToInsert["Pokarm"]);
+            FillTablePokarmGatunek(ValuesToInsert["PokarmGatunek"]);
+            FillTableZamowienia(ValuesToInsert["Zamowienie"]);
+            FillTableUzytkownikFirma(ValuesToInsert["UzytkownikFirma"]);
+            FillTableZwierzeta(ValuesToInsert["Zwierzeta"]);
+            FillTableProduktZamowienie(ValuesToInsert["Zamowienie"]);
         }
 
-        private void FillTableKraje(int ileRekordów)
+        private void FillTableKraje(uint ileRekordów)
         {
             HashSet<KrajRandomize> KrajToFilleTable = new HashSet<KrajRandomize>();
             int krajelistLastId;
@@ -49,7 +49,7 @@ namespace GenerowanieRekordówDoBazy
             
         }
 
-        private void FillTableGatunek(int ileRekordów)
+        private void FillTableGatunek(uint ileRekordów)
         {
             HashSet<GatunekRandomize> GatunekToFilleTable = new HashSet<GatunekRandomize>();
             int gatuneklistLastId = allLists.PodgatuenkLastId;
@@ -65,7 +65,7 @@ namespace GenerowanieRekordówDoBazy
             insertObjectToDatabase.InsertGatunki(GatunekToFilleTable);
         }
 
-        private void FillTablePodGatunek(int ileRekordów)
+        private void FillTablePodGatunek(uint ileRekordów)
         {
             int podgatunekLastid=allLists.PodgatuenkLastId;
 
@@ -81,7 +81,7 @@ namespace GenerowanieRekordówDoBazy
             insertObjectToDatabase.InsertPodgatunki(PodGatunekToFilleTable);
         }
 
-        private void FillTableAdres(int ileRekordów)
+        private void FillTableAdres(uint ileRekordów)
         {
             int adreslistLastId;
             if (allLists.AdresyIdList.Count == 0) adreslistLastId = 0;
@@ -98,7 +98,7 @@ namespace GenerowanieRekordówDoBazy
             allLists.KrajeIdList.Clear();
         }
 
-        private void FillTableFirma(int ileRekordów)
+        private void FillTableFirma(uint ileRekordów)
         {
             HashSet<FirmaRandomize> FirmyToFilleTable = new HashSet<FirmaRandomize>();
             int maxindex;
@@ -115,7 +115,7 @@ namespace GenerowanieRekordówDoBazy
             allLists.NipHashSet.Clear();
         }
 
-        private void FillTableUzytkownik(int ileRekordów)
+        private void FillTableUzytkownik(uint ileRekordów)
         {
             HashSet<UzytkownikRandomize> UzytkownicyToFilleTable = new HashSet<UzytkownikRandomize>();
             int maxindex;
@@ -134,7 +134,7 @@ namespace GenerowanieRekordówDoBazy
             allLists.EmaileHashSet.Clear();
         }
 
-        private void FillTablePracownik(int ileRekordów)
+        private void FillTablePracownik(uint ileRekordów)
         {
             HashSet<PracownikRandomize> UzytkownicyToFilleTable = new HashSet<PracownikRandomize>();
             int maxindex = allLists.PracownikLastId;
@@ -151,7 +151,7 @@ namespace GenerowanieRekordówDoBazy
 
         }
 
-        private void FillTableKlient(int ileRekordów)
+        private void FillTableKlient(uint ileRekordów)
         {
             HashSet<KlientRandomize> KlienciToFilleTable = new HashSet<KlientRandomize>();
             int maxindex = allLists.KlientLastId;
@@ -165,7 +165,7 @@ namespace GenerowanieRekordówDoBazy
             allLists.AdresyIdList.Clear();
         }
 
-        private void FillTableAkcesorie(int ileRekordów)
+        private void FillTableAkcesorie(uint ileRekordów)
         {
             HashSet<ProduktRandomize> ProduktyToFilleTable = new HashSet<ProduktRandomize>();
             HashSet<AkcesorieRandomize> AkcesorieToFilleTable = new HashSet<AkcesorieRandomize>();
@@ -185,7 +185,7 @@ namespace GenerowanieRekordówDoBazy
             insertObjectToDatabase.InsertAkcesoria(AkcesorieToFilleTable);
         }
 
-        private void FillTablePokarm(int ileRekordów)
+        private void FillTablePokarm(uint ileRekordów)
         {
             HashSet<ProduktRandomize> ProduktyToFilleTable = new HashSet<ProduktRandomize>();
             HashSet<PokarmRandomize> PokarmyToFilleTable = new HashSet<PokarmRandomize>();
@@ -206,7 +206,7 @@ namespace GenerowanieRekordówDoBazy
             insertObjectToDatabase.InsertPokarmy(PokarmyToFilleTable);
         }
 
-        private void FillTablePokarmGatunek(int ileRekordów)
+        private void FillTablePokarmGatunek(uint ileRekordów)
         {
             int maxindex=allLists.PokarmGatunekLastId;
        
@@ -221,7 +221,7 @@ namespace GenerowanieRekordówDoBazy
             allLists.PokarmyIdList.Clear();
         }
 
-        private void FillTableZamowienia(int ileRekordów)
+        private void FillTableZamowienia(uint ileRekordów)
         {
             int maxindex;
             if (allLists.ZamowieniaIdList.Count == 0) maxindex = 0;
@@ -237,7 +237,7 @@ namespace GenerowanieRekordówDoBazy
             insertObjectToDatabase.InsertZamowienia(ZamowieniaToFilleTable);
         }
 
-        private void FillTableUzytkownikFirma(int ileRekordów)
+        private void FillTableUzytkownikFirma(uint ileRekordów)
         {
             int maxindex = allLists.UzytkownikFirmaLastId;
             HashSet<Posrednia_Uzytkownik_FirmaRadmoize> UzytkownikFirmaToFilleTable = new HashSet<Posrednia_Uzytkownik_FirmaRadmoize>();
@@ -251,7 +251,7 @@ namespace GenerowanieRekordówDoBazy
             allLists.UzytkownicyIdList.Clear();
         }
 
-        private void FillTableZwierzeta(int ileRekordów)
+        private void FillTableZwierzeta(uint ileRekordów)
         {
             HashSet<ProduktRandomize> ProduktyToFilleTable = new HashSet<ProduktRandomize>();
             HashSet<ZwierzeRandomize> ZwierzeToFilleTable = new HashSet<ZwierzeRandomize>();
@@ -276,7 +276,7 @@ namespace GenerowanieRekordówDoBazy
             allLists.ProducenciIdList.Clear();
         }
 
-        private void FillTableProduktZamowienie(int ileRekordów)
+        private void FillTableProduktZamowienie(uint ileRekordów)
         {
             int maxindex = allLists.ProduktZamowienieCount;
             HashSet<Posrednia_Produkt_ZamowienieRandomize> ProduktZamowienieToFilleTable = new HashSet<Posrednia_Produkt_ZamowienieRandomize>();

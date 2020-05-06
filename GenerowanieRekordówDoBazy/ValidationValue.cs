@@ -8,19 +8,19 @@ namespace GenerowanieRekordówDoBazy
     public class ValidationValue
     {
         int maxValue = 24000;
-        List<string> Errors = new List<string>();
+        public List<string> Errors = new List<string>();
         private string errorsValueToHight = "Wartość dla tabeli {0} jest za duża (max {1})";
         private string errorsNotEnoughtCombination = "Nie można utworzyć odpowiedniej ilość kombinacji dla tabeli {0}  (max {1})";
-        public ValidationValue(Dictionary<string,int> valuesToInsert,bool clearDatabese, PreperAllListForRandomize allLists)
+        public ValidationValue(Dictionary<string,uint> valuesToInsert,bool clearDatabese, PreperAllListForRandomize allLists)
         {
-            if (clearDatabese) checkMaxValueWithRemoving(valuesToInsert);
+            if (clearDatabese) checkMaxValueWithRemoving(allLists,valuesToInsert);
             else
             {
                 checkMaxValueWithoutRemoving(allLists, valuesToInsert);
                 CheckConnectionTableWithoutRemoving(allLists, valuesToInsert);
             }
         }
-        private void checkMaxValueWithRemoving(Dictionary<string, int> valuesToInsert)
+        private void checkMaxValueWithRemoving(PreperAllListForRandomize allLists,Dictionary<string, uint> valuesToInsert)
         {
             if (valuesToInsert["Adres"] > maxValue)
                 Errors.Add(String.Format(errorsValueToHight, "Adres", maxValue.ToString()));
@@ -32,8 +32,8 @@ namespace GenerowanieRekordówDoBazy
                 Errors.Add(String.Format(errorsValueToHight, "Gatunek", maxValue.ToString()));
             if (valuesToInsert["Klient"]  > maxValue)
                 Errors.Add(String.Format(errorsValueToHight, "Klient", maxValue.ToString()));
-            if (valuesToInsert["Kraj"] > maxValue)
-                Errors.Add(String.Format(errorsValueToHight, "Kraj", maxValue .ToString()));
+            if (valuesToInsert["Kraj"] > allLists.KrajeListWithoutRemove.Count)
+                Errors.Add(String.Format(errorsValueToHight, "Kraj", allLists.KrajeListWithoutRemove.Count.ToString()));
             if (valuesToInsert["Podgatunek"]  > maxValue)
                 Errors.Add(String.Format(errorsValueToHight, "Podgatunek", maxValue.ToString()));
             if (valuesToInsert["Pokarm"] > maxValue)
@@ -53,7 +53,7 @@ namespace GenerowanieRekordówDoBazy
             if (valuesToInsert["Zwierze"] > maxValue)
                 Errors.Add(String.Format(errorsValueToHight, "Zwierze", maxValue.ToString()));
         }
-        private void checkMaxValueWithoutRemoving(PreperAllListForRandomize allLists, Dictionary<string, int> valuesToInsert)
+        private void checkMaxValueWithoutRemoving(PreperAllListForRandomize allLists, Dictionary<string, uint> valuesToInsert)
         {
             if (valuesToInsert["Adres"] + allLists.AdresyIdList.Count > maxValue)
                 Errors.Add(String.Format(errorsValueToHight, "Adres", (maxValue - allLists.AdresyIdList.Count).ToString()));
@@ -65,8 +65,8 @@ namespace GenerowanieRekordówDoBazy
                 Errors.Add(String.Format(errorsValueToHight, "Gatunek", (maxValue - allLists.GatunkiIdList.Count).ToString()));
             if (valuesToInsert["Klient"] + allLists.CountKlient > maxValue)
                 Errors.Add(String.Format(errorsValueToHight, "Klient", (maxValue - allLists.CountKlient).ToString()));
-            if (valuesToInsert["Kraj"] + allLists.CountKraj > maxValue)
-                Errors.Add(String.Format(errorsValueToHight, "Kraj", (maxValue - allLists.CountKraj).ToString()));
+            if (valuesToInsert["Kraj"]  > allLists.KrajeList.Count)
+                Errors.Add(String.Format(errorsValueToHight, "Kraj", allLists.KrajeList.Count.ToString()));
             if (valuesToInsert["Podgatunek"] + allLists.CountPodgatunek > maxValue)
                 Errors.Add(String.Format(errorsValueToHight, "Podgatunek", (maxValue - allLists.CountPodgatunek).ToString()));
             if (valuesToInsert["Pokarm"] + allLists.PokarmyIdList.Count > maxValue)
@@ -86,7 +86,7 @@ namespace GenerowanieRekordówDoBazy
             if (valuesToInsert["Zwierze"] + allLists.ZwierzetaIdList.Count > maxValue)
                 Errors.Add(String.Format(errorsValueToHight, "Zwierze", (maxValue - allLists.ZwierzetaIdList.Count).ToString()));
         }
-        private void CheckConnectionTableWithoutRemoving(PreperAllListForRandomize allLists, Dictionary<string, int> valuesToInsert)
+        private void CheckConnectionTableWithoutRemoving(PreperAllListForRandomize allLists, Dictionary<string, uint> valuesToInsert)
         {
             if ((allLists.PokarmyIdList.Count + valuesToInsert["Pokarm"]) *
                 (allLists.GatunkiIdList.Count + valuesToInsert["Gatunek"]) <
