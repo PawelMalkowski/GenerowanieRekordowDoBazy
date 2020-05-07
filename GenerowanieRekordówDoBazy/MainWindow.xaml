@@ -3,7 +3,6 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:fa="http://schemas.fontawesome.io/icons/"
         xmlns:local="clr-namespace:GenerowanieRekordówDoBazy"
         mc:Ignorable="d"
         Title="MainWindow" Height="850" Width="400" Initialized="Window_Initialized">
@@ -45,6 +44,22 @@
         <TextBox  x:Name="Zwierze" Text="" Margin="167,398,10,83" TextWrapping="Wrap" Height="30" FontSize="20" Grid.Row="1" MaxLength="5" TextAlignment="Center"/>
         <Button x:Name="Fillbutton" Content="Loading.." HorizontalAlignment="Left" Margin="278,433,0,0" VerticalAlignment="Top" Height="37" Width="84" Click="Fillbutton_Click" Grid.Row="1"/>
         <CheckBox x:Name="ClearDb" IsChecked="true" Content="Wyczyść bazę" HorizontalAlignment="Left" Margin="32,445,0,0" VerticalAlignment="Top" Grid.Row="1"/>
+        <ProgressBar x:Name="ProgresAdres"  HorizontalAlignment="Left" Height="30" Margin="167,107,0,0" VerticalAlignment="Top" Width="203" Visibility="Hidden"/>
+        <ProgressBar x:Name="ProgresAkcesorie"   HorizontalAlignment="Left" Height="30" Margin="167,152,0,0" VerticalAlignment="Top" Width="203" Visibility="Hidden"/>
+        <ProgressBar x:Name="ProgresFirma" HorizontalAlignment="Left" Height="30" Margin="167,197,0,0" VerticalAlignment="Top" Width="203" Visibility="Hidden"/>
+        <ProgressBar x:Name="ProgresGatunek"  HorizontalAlignment="Left" Height="30" Margin="167,242,0,0" VerticalAlignment="Top" Width="203" Visibility="Hidden"/>
+        <ProgressBar x:Name="ProgresKlient"  HorizontalAlignment="Left" Height="30" Margin="167,287,0,0" VerticalAlignment="Top" Width="203" Visibility="Hidden"/>
+        <ProgressBar x:Name="ProgresKraj"  HorizontalAlignment="Left" Height="30" Margin="167,327,0,0" VerticalAlignment="Top" Width="203" Grid.RowSpan="2" Visibility="Hidden"/>
+        <ProgressBar x:Name="ProgresPodgatunek"  HorizontalAlignment="Left" Height="30" Margin="167,43,0,0" VerticalAlignment="Top" Width="203" Grid.Row="1" Visibility="Hidden"/>
+        <ProgressBar x:Name="ProgresPokarm"  HorizontalAlignment="Left" Height="30" Margin="167,91,0,0" VerticalAlignment="Top" Width="203" Grid.Row="1" Visibility="Hidden"/>
+        <ProgressBar x:Name="ProgresPokarmGatunek"  HorizontalAlignment="Left" Height="30" Margin="167,133,0,0" VerticalAlignment="Top" Width="203" Grid.Row="1" Visibility="Hidden"/>
+        <ProgressBar x:Name="ProgresProduktZamowienie"  HorizontalAlignment="Left" Height="30" Margin="167,173,0,0" VerticalAlignment="Top" Width="203" Grid.Row="1" Visibility="Hidden"/>
+        <ProgressBar x:Name="ProgresUzytkownikFirma"  HorizontalAlignment="Left" Height="30" Margin="167,213,0,0" VerticalAlignment="Top" Width="203" Grid.Row="1" Visibility="Hidden"/>
+        <ProgressBar x:Name="ProgresPracownik"  HorizontalAlignment="Left" Height="30" Margin="167,263,0,0" VerticalAlignment="Top" Width="203" Grid.Row="1" Visibility="Hidden"/>
+        <ProgressBar x:Name="ProgresUzytkownik"  HorizontalAlignment="Left" Height="30" Margin="167,308,0,0" VerticalAlignment="Top" Width="203" Grid.Row="1" Visibility="Hidden"/>
+        <ProgressBar x:Name="ProgresZamowienie"  HorizontalAlignment="Left" Height="30" Margin="167,353,0,0" VerticalAlignment="Top" Width="203" Grid.Row="1" Visibility="Hidden"/>
+        <ProgressBar x:Name="ProgresZwierze"  HorizontalAlignment="Left" Height="30" Margin="167,398,0,0" VerticalAlignment="Top" Width="203" Grid.Row="1" Visibility="Hidden"/>
+        <Label x:Name="LabelStatus" Visibility="Hidden" Content="Czyszczenie bazy" HorizontalAlignment="Left" Margin="167,68,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.526,0.579"/>
 
 
 

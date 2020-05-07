@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -17,8 +18,11 @@ namespace GenerowanieRekordówDoBazy
     {
         PreperAllListForRandomize Lists;
         TextBox[] TextBoxs;
+        ProgressBar[] progressBars;
         ValidationValue validationValue;
-        PreperObjectsToInsert preperObjectsToInsert;
+        volatile PreperObjectsToInsert preperObjectsToInsert= new PreperObjectsToInsert();
+        volatile bool[] clearDbIsFinish = new bool[1];
+
         private static readonly Regex _regex = new Regex("[^0-9]+");
         private static bool IsTextAllowed(string text)
         {
@@ -46,6 +50,7 @@ namespace GenerowanieRekordówDoBazy
         private void Window_Initialized(object sender, EventArgs e)
         {
             TextBoxs = new TextBox[15] { Adres, Akcesorie, Firma, Gatunek, Klient, Kraj, Podgatunek, Pokarm, PokarmGatunek, ProduktZamowienie, UzytkownikFirma, Pracownik, Uzytkownik, Zamowienie, Zwierze };
+            progressBars = new ProgressBar[15] { ProgresAdres, ProgresAkcesorie, ProgresFirma, ProgresGatunek, ProgresKlient, ProgresKraj, ProgresPodgatunek, ProgresPokarm, ProgresPokarmGatunek, ProgresProduktZamowienie, ProgresUzytkownikFirma, ProgresPracownik, ProgresUzytkownik, ProgresZamowienie, ProgresZwierze };
             for (int i = 0; i < TextBoxs.Length; i++)
             {
                 TextBoxs[i].PreviewTextInput += new TextCompositionEventHandler(TextBoxPasting);
@@ -111,8 +116,39 @@ namespace GenerowanieRekordówDoBazy
 
             if (isNumber) CheckData(ValuesToInsert);
             else MessageBox.Show("Dopuszczelne są tylko dodatnie liczby", "Eroor");
-            if (validationValue.Errors.Count == 0) preperObjectsToInsert = new PreperObjectsToInsert(Lists, ClearDb.IsChecked == true, ValuesToInsert);
+            if (validationValue.Errors.Count == 0)
+            {
+                bool clear = ClearDb.IsChecked == true;
+                Task.Run(() => InsertDb(ValuesToInsert, clear ,Lists));
+                System.Windows.Threading.DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
+                dispatcherTimer.Tick += (sender, e) => dispatcherTimer_Tick(sender, e);
+                dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 20, 0);
+                dispatcherTimer.Start();
+
+            }
+            else
+            {
+                string errors = "";
+                foreach (string error in validationValue.Errors)
+                {
+                    errors += error + System.Environment.NewLine;
+                }
+                MessageBox.Show(errors, "Eroor");
+            }
+            
         }
+        private void  InsertDb(Dictionary<string, uint> ValuesToInsert, bool clearDb, PreperAllListForRandomize Lists)
+        {
+           preperObjectsToInsert.StartInsert(Lists, clearDb, ValuesToInsert);
+            
+        }
+        private void dispatcherTimer_Tick(object sender, EventArgs e)
+        {
+
+            if (preperObjectsToInsert.isFinish) MessageBox.Show("Dopuszczelne są tylko dodatnie liczby", "Eroor");
+            
+        }
+
         private void CheckData(Dictionary<string, uint> ValuesToInsert)
         {
             validationValue = new ValidationValue(ValuesToInsert, ClearDb.IsChecked == true, Lists);

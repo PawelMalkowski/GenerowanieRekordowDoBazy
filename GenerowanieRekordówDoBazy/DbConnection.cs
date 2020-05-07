@@ -35,12 +35,12 @@ namespace GenerowanieRekordówDoBazy
         }
         public void Insertquery(string query)
         {
-            OracleCommand ins = new OracleCommand();
-          
-             
-                ins.CommandText = query;
-                ins.Connection = connection;
-                ins.ExecuteNonQuery();
+            OracleCommand ins = new OracleCommand
+            {
+                CommandText = query,
+                Connection = connection
+            };
+            ins.ExecuteNonQuery();
             
         }
         public void InsertObjectToDatabaseTodatbase(string table,string columns,HashSet<string> values)
@@ -49,7 +49,7 @@ namespace GenerowanieRekordówDoBazy
             string insert = "INSERT ALL ";
             if (values.Count > 0)
             {
-                foreach (var val in values)
+                foreach (string val in values)
                 {
                     insert += "into " + table + "(" + columns + ") values (" + val + ")";
                 }

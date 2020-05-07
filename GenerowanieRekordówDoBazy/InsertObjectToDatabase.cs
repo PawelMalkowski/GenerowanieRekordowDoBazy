@@ -9,7 +9,7 @@ namespace GenerowanieRekordówDoBazy
     class InsertObjectToDatabase
     {
         private readonly DbConnection dbConnection = new DbConnection();
-
+        public int[] progress = new int[15];
         public void InsertKraje(HashSet<KrajRandomize> Kraje)
         {
             string tabel = "KRAJ";
@@ -18,6 +18,7 @@ namespace GenerowanieRekordówDoBazy
             int i = 0;
            foreach(var kraj in Kraje)
            {
+                ++progress[0];
                 values.Add(kraj.Id+" , '"+kraj.Nazwa+"'");
                 if (i == 200)
                 {
@@ -38,6 +39,7 @@ namespace GenerowanieRekordówDoBazy
             int i = 0;
            foreach(var gatunek in Gatunki)
            {
+                ++progress[1];
                 values.Add(gatunek.Id+" , '"+gatunek.Nazwa+"'");
                 if (i == 200)
                 {
@@ -58,6 +60,7 @@ namespace GenerowanieRekordówDoBazy
             int i = 0;
             foreach (var podgatunek in Podgatunki)
             {
+                ++progress[2];
                 values.Add(podgatunek.Id + " , '" + podgatunek.Nazwa + "' , "+podgatunek.Id_gatunek);
                 if (i==200)
                 {
@@ -78,6 +81,7 @@ namespace GenerowanieRekordówDoBazy
             int i = 0;
             foreach (var adres in Adresy)
             {
+                ++progress[3];
                 values.Add(adres.Id + ","+adres.Kraj+ " , '"+adres.Miejscowosc+"' , '"+adres.Ulica+" ' ,"+adres.NumerDomu+","+adres.NumerMieszkania+",'"+adres.KodPocztowy+"'");
                 if (i == 200)
                 {
@@ -98,6 +102,7 @@ namespace GenerowanieRekordówDoBazy
             int i = 0;
             foreach (var firma in Firmy)
             {
+                ++progress[4];
                 values.Add(firma.Id + ", '" + firma.Nazwa + "' , '" + firma.NIP + "' , " + firma.Adres + "  ," + firma.Telefon + ",'" + firma.Email + "'");
                 if (i == 200)
                 {
@@ -117,6 +122,7 @@ namespace GenerowanieRekordówDoBazy
             int i = 0;
             foreach (var uzytkownik in Uzytkownicy)
             {
+                ++progress[5];
                 values.Add(uzytkownik.Id + ", '" + uzytkownik.Login + "' , '" + uzytkownik.Haslo + "' , '" + uzytkownik.Email + "'");
                 if (i == 200)
                 {
@@ -136,6 +142,7 @@ namespace GenerowanieRekordówDoBazy
             int i = 0;
             foreach (var pracownik in Pracownicy)
             {
+                ++progress[6];
                 values.Add(pracownik.Id + ", '" + pracownik.Imie + "' , '" + pracownik.DrugieImie + "' , '" + pracownik.Nazwisko + "','"+pracownik.PESEL+"',"+pracownik.Adres+",'"+pracownik.Telefon+"','"+pracownik.Email+"'");
                 if (i == 200)
                 {
@@ -156,6 +163,7 @@ namespace GenerowanieRekordówDoBazy
             int i = 0;
             foreach (var klient in Klienci)
             {
+                ++progress[7];
                 values.Add(klient.Id + ", '" + klient.Imie +  "' , '" + klient.Nazwisko + "'," + klient.Telefon + ",'" + klient.Email + "'," + klient.Adres);
                 if (i == 200)
                 {
@@ -194,6 +202,7 @@ namespace GenerowanieRekordówDoBazy
             int i = 0;
             foreach (var akcesorie in Akcesoria)
             {
+                ++progress[8];
                 values.Add(akcesorie.ID + ",'" + akcesorie.Nazwa + "'," + akcesorie.Producent + "," + akcesorie.Zwierze);
                 if (i == 200)
                 {
@@ -213,6 +222,7 @@ namespace GenerowanieRekordówDoBazy
             int i = 0;
             foreach (var pokarm in Pokarmy)
             {
+                ++progress[9];
                 values.Add(pokarm.Id + "," + pokarm.Producent+ "," + pokarm.Zwierze + "," + pokarm.Kalorie+ ",'"+pokarm.Nazwa+"'");
                 if (i == 200)
                 {
@@ -232,6 +242,7 @@ namespace GenerowanieRekordówDoBazy
             int i = 0;
             foreach (var pokarmgatunek in PokarmGatunek)
             {
+                ++progress[10];
                 values.Add(pokarmgatunek.Id + "," + pokarmgatunek.Id_Gatunek + "," + pokarmgatunek.Id_Pokarm);
                 if (i == 200)
                 {
@@ -251,6 +262,7 @@ namespace GenerowanieRekordówDoBazy
             int i = 0;
             foreach (var zamowienie in Zamowienia)
             {
+                ++progress[11];
                 values.Add(zamowienie.Id + "," + "to_date('"+zamowienie.Data_zlozenia.Year+"/"+zamowienie.Data_zlozenia.Month+"/"+zamowienie.Data_zlozenia.Day+"', 'RR/MM/DD')  ," + zamowienie.Status+","+zamowienie.Przesylka);
                 if (i == 200)
                 {
@@ -270,6 +282,7 @@ namespace GenerowanieRekordówDoBazy
             int i = 0;
             foreach (var uzytkownikFirma in UzytkownikFirma)
             {
+                ++progress[12];
                 values.Add(uzytkownikFirma.Id + "," + uzytkownikFirma.Id_User + "," + uzytkownikFirma.Id_Firma);
                 if (i == 200)
                 {
@@ -290,6 +303,7 @@ namespace GenerowanieRekordówDoBazy
             
             foreach (var zwierze in Zwierzeta)
             {
+                ++progress[13];
                 string MatkaString, OjciecString;
                 if (zwierze.Matka == 0) MatkaString = "null";
                 else MatkaString = zwierze.Matka.ToString();
@@ -315,6 +329,7 @@ namespace GenerowanieRekordówDoBazy
             int i = 0;
             foreach (var produktzamowienie in ProduktZamowienie)
             {
+                ++progress[14];
                 values.Add(produktzamowienie.Id + "," + produktzamowienie.Id_Zamowienie+ "," + produktzamowienie.Id_Produkt);
                 if (i == 200)
                 {

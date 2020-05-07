@@ -3,31 +3,33 @@ using System.Collections.Generic;
 
 namespace GenerowanieRekordówDoBazy
 {
-    class PreperObjectsToInsert
+   class PreperObjectsToInsert
     {
         private static readonly DbConnection DbConnection = new DbConnection();
         private PreperAllListForRandomize allLists;
-        private static readonly InsertObjectToDatabase insertObjectToDatabase = new InsertObjectToDatabase();
-        public PreperObjectsToInsert(PreperAllListForRandomize Lists, bool clearDatabese, Dictionary<string,uint> ValuesToInsert)
+        public bool isFinish = false;
+        public readonly InsertObjectToDatabase insertObjectToDatabase = new InsertObjectToDatabase();
+        public void StartInsert(PreperAllListForRandomize Lists,bool clearDatabese, Dictionary<string,uint> ValuesToInsert)
         {
             allLists = Lists;
             if (clearDatabese) PreperEmptyDatabase();
+            isFinish = true;
             FillTableKraje(ValuesToInsert["Kraj"]);
             FillTableGatunek(ValuesToInsert["Gatunek"]);
             FillTablePodGatunek(ValuesToInsert["Podgatunek"]);
             FillTableAdres(ValuesToInsert["Adres"]);
             FillTableFirma(ValuesToInsert["Firma"]);
-             FillTableUzytkownik(ValuesToInsert["Uzytkownik"]);
+            FillTableUzytkownik(ValuesToInsert["Uzytkownik"]);
             FillTablePracownik(ValuesToInsert["Pracownik"]);
             FillTableKlient(ValuesToInsert["Klient"]);
             FillTableAkcesorie(ValuesToInsert["Akcesorie"]);
             FillTablePokarm(ValuesToInsert["Pokarm"]);
             FillTablePokarmGatunek(ValuesToInsert["PokarmGatunek"]);
-            FillTableZamowienia(ValuesToInsert["Zamowienie"]);
+            FillTableZamowienia(ValuesToInsert["Zamowienie"]); 
             FillTableUzytkownikFirma(ValuesToInsert["UzytkownikFirma"]);
-            FillTableZwierzeta(ValuesToInsert["Zwierzeta"]);
+            FillTableZwierzeta(ValuesToInsert["Zwierze"]);
             FillTableProduktZamowienie(ValuesToInsert["Zamowienie"]);
-        }
+          }
 
         private void FillTableKraje(uint ileRekordów)
         {
