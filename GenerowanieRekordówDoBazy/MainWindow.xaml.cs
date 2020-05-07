@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 
 namespace GenerowanieRekordówDoBazy
 {
@@ -16,10 +19,13 @@ namespace GenerowanieRekordówDoBazy
 
     public partial class MainWindow : Window
     {
-        PreperAllListForRandomize Lists;
+        volatile PreperAllListForRandomize Lists;
         TextBox[] TextBoxs;
         ProgressBar[] progressBars;
         ValidationValue validationValue;
+        volatile uint[] values;
+        volatile uint Sum;
+        
         volatile PreperObjectsToInsert preperObjectsToInsert= new PreperObjectsToInsert();
         volatile bool[] clearDbIsFinish = new bool[1];
 
@@ -51,14 +57,14 @@ namespace GenerowanieRekordówDoBazy
         {
             TextBoxs = new TextBox[15] { Adres, Akcesorie, Firma, Gatunek, Klient, Kraj, Podgatunek, Pokarm, PokarmGatunek, ProduktZamowienie, UzytkownikFirma, Pracownik, Uzytkownik, Zamowienie, Zwierze };
             progressBars = new ProgressBar[15] { ProgresAdres, ProgresAkcesorie, ProgresFirma, ProgresGatunek, ProgresKlient, ProgresKraj, ProgresPodgatunek, ProgresPokarm, ProgresPokarmGatunek, ProgresProduktZamowienie, ProgresUzytkownikFirma, ProgresPracownik, ProgresUzytkownik, ProgresZamowienie, ProgresZwierze };
-            for (int i = 0; i < TextBoxs.Length; i++)
+            foreach (var textbox in TextBoxs)
             {
-                TextBoxs[i].PreviewTextInput += new TextCompositionEventHandler(TextBoxPasting);
-                TextBoxs[i].PreviewKeyDown += new KeyEventHandler(TextBox_KeyPress);
+                textbox.PreviewTextInput += new TextCompositionEventHandler(TextBoxPasting);
+                textbox.PreviewKeyDown += new KeyEventHandler(TextBox_KeyPress);
             }
+            
 
-
-            Calculate_Click(sender, e);
+                Calculate_Click(sender, e);
         }
         private async void Calculate_Click(object sender, EventArgs e)
         {
@@ -77,12 +83,13 @@ namespace GenerowanieRekordówDoBazy
         private void Fillbutton_Click(object sender, RoutedEventArgs e)
         {
             uint temporary = 0;
-            bool isNumber = true; ;
+            bool isNumber = true;
+            Dictionary<string, uint> ValuesToInsert = new Dictionary<string, uint>();
             foreach (var CurrentTextbox in TextBoxs)
             {
                 if (CurrentTextbox.Text == "") CurrentTextbox.Text = "0";
             }
-            Dictionary<string, uint> ValuesToInsert = new Dictionary<string, uint>();
+            
             if (!UInt32.TryParse(TextBoxs[0].Text, out temporary)) isNumber = false;
             ValuesToInsert.Add("Adres", temporary);
             if (!UInt32.TryParse(TextBoxs[1].Text, out temporary)) isNumber = false;
@@ -119,10 +126,36 @@ namespace GenerowanieRekordówDoBazy
             if (validationValue.Errors.Count == 0)
             {
                 bool clear = ClearDb.IsChecked == true;
+                foreach (var textbox in TextBoxs)
+                {
+                    textbox.Visibility = Visibility.Hidden;
+                }
+                foreach (var progresbar in progressBars)
+                {
+                    progresbar.Visibility = Visibility.Visible;
+                }
+                Fillbutton.IsEnabled = false;
+                ClearDb.IsEnabled = false;
+                LabelStatus.Visibility = Visibility.Visible;
+                values = ValuesToInsert.Values.ToArray();
+                values[1] *= 2;
+                values[7] *= 2;
+                values[14] *= 2;
+                GeneralProgress.Visibility = Visibility.Visible;
+                foreach (uint value in values) Sum += value;
+                for(int i=0; i< values.Length; ++i)
+                {
+                    if (values[i] == 0)
+                    {
+                        progressBars[i].IsEnabled = false;
+                        progressBars[i].Value = 100;
+                        progressBars[i].Foreground =Brushes.Gray;
+                    }
+                }
                 Task.Run(() => InsertDb(ValuesToInsert, clear ,Lists));
                 System.Windows.Threading.DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
-                dispatcherTimer.Tick += (sender, e) => dispatcherTimer_Tick(sender, e);
-                dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 20, 0);
+                dispatcherTimer.Tick += (sender, e) => DispatcherTimer_Tick(sender, e);
+                dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, 1);
                 dispatcherTimer.Start();
 
             }
@@ -131,7 +164,7 @@ namespace GenerowanieRekordówDoBazy
                 string errors = "";
                 foreach (string error in validationValue.Errors)
                 {
-                    errors += error + System.Environment.NewLine;
+                    errors += error + Environment.NewLine;
                 }
                 MessageBox.Show(errors, "Eroor");
             }
@@ -142,11 +175,25 @@ namespace GenerowanieRekordówDoBazy
            preperObjectsToInsert.StartInsert(Lists, clearDb, ValuesToInsert);
             
         }
-        private void dispatcherTimer_Tick(object sender, EventArgs e)
+        private void DispatcherTimer_Tick(object sender, EventArgs e)
         {
 
-            if (preperObjectsToInsert.isFinish) MessageBox.Show("Dopuszczelne są tylko dodatnie liczby", "Eroor");
-            
+            if (!preperObjectsToInsert.isFinish)
+            {
+                GeneralProgress.Value = (double)preperObjectsToInsert.cleanStatus / Lists.ScriptList.Count() * 100.0;
+                
+            }
+            else
+            {
+                LabelStatus.Content = "Wypełnianie tabel";
+                GeneralProgress.Value = (double)preperObjectsToInsert.insertObjectToDatabase.recordsIsdone / Sum * 100.0;
+                for (int i = 0; i < progressBars.Length; ++i)
+                {
+                    if(progressBars[i].IsEnabled)
+                    progressBars[i].Value = (double)preperObjectsToInsert.insertObjectToDatabase.progress[i] / values[i] * 100;
+                }
+            }
+            ((MainWindow)System.Windows.Application.Current.MainWindow).UpdateLayout();
         }
 
         private void CheckData(Dictionary<string, uint> ValuesToInsert)

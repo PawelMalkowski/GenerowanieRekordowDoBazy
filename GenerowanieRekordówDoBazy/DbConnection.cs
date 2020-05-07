@@ -35,11 +35,9 @@ namespace GenerowanieRekordówDoBazy
         }
         public void Insertquery(string query)
         {
-            OracleCommand ins = new OracleCommand
-            {
-                CommandText = query,
-                Connection = connection
-            };
+            OracleCommand ins = new OracleCommand();
+            ins.CommandText = query;
+            ins.Connection = connection;
             ins.ExecuteNonQuery();
             
         }

@@ -7,6 +7,7 @@ namespace GenerowanieRekordówDoBazy
     {
         private static readonly DbConnection DbConnection = new DbConnection();
         private PreperAllListForRandomize allLists;
+        public int cleanStatus=0;
         public bool isFinish = false;
         public readonly InsertObjectToDatabase insertObjectToDatabase = new InsertObjectToDatabase();
         public void StartInsert(PreperAllListForRandomize Lists,bool clearDatabese, Dictionary<string,uint> ValuesToInsert)
@@ -183,7 +184,7 @@ namespace GenerowanieRekordówDoBazy
                 ProduktyToFilleTable.Add(produkty);
                 AkcesorieToFilleTable.Add(akcesorie);                  
             }
-            insertObjectToDatabase.InsertProdukty(ProduktyToFilleTable);
+            insertObjectToDatabase.InsertProdukty(ProduktyToFilleTable,1);
             insertObjectToDatabase.InsertAkcesoria(AkcesorieToFilleTable);
         }
 
@@ -204,7 +205,7 @@ namespace GenerowanieRekordówDoBazy
                 ProduktyToFilleTable.Add(produkty);
                 PokarmyToFilleTable.Add(Pokarm);
             }
-            insertObjectToDatabase.InsertProdukty(ProduktyToFilleTable);
+            insertObjectToDatabase.InsertProdukty(ProduktyToFilleTable,7);
             insertObjectToDatabase.InsertPokarmy(PokarmyToFilleTable);
         }
 
@@ -270,7 +271,7 @@ namespace GenerowanieRekordówDoBazy
                 ProduktyToFilleTable.Add(produkty);
                 ZwierzeToFilleTable.Add(zwierze);
             }
-            insertObjectToDatabase.InsertProdukty(ProduktyToFilleTable);
+            insertObjectToDatabase.InsertProdukty(ProduktyToFilleTable,14);
             insertObjectToDatabase.InsertZwierzeta(ZwierzeToFilleTable);
             allLists.GatunkiIdList.Clear();
             allLists.PodGatunkiHashSet.Clear();
@@ -342,7 +343,11 @@ namespace GenerowanieRekordówDoBazy
             //DbConnection.DeleteDataFromTable("KRAJ");
             //DbConnection.DeleteDataFromTable("Zamowienia");
             foreach (string query in allLists.ScriptList)
+            {
+                ++cleanStatus;
                 DbConnection.Insertquery(query);
+            }
+                
         }
     }
 }
