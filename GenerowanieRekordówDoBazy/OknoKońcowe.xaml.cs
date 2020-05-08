@@ -19,10 +19,11 @@ namespace GenerowanieRekordówDoBazy
     /// </summary>
     public partial class OknoKońcowe 
     {
-        public OknoKońcowe(string insertsString)
+        public OknoKońcowe(string insertsString,TimeSpan insertTime)
         {
             InitializeComponent();
             inserts.Text = insertsString;
+            labelTime.Content += insertTime.Minutes + ":" + insertTime.Seconds;
         }
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)

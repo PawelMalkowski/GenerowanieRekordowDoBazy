@@ -63,6 +63,7 @@
         <Label  x:Name="LabelStatus" Foreground="Blue" Visibility="Hidden" Content="Czyszczenie bazy" HorizontalAlignment="Left" Margin="47,69,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.526,0.579" Height="31" Width="120"/>
         <ProgressBar Visibility="Hidden"  Foreground="Blue" x:Name="GeneralProgress"  Margin="152,73,45,233" />
         <Label Content="Generowanie rekordów do bazy" Margin="15,10,15,275" FontSize="23" FontWeight="Bold" Foreground="#FF11A201"/>
+        <Label x:Name="timeLabel"  HorizontalAlignment="Left" Margin="214,437,0,0" Grid.Row="1" VerticalAlignment="Top" RenderTransformOrigin="0.869,-1.308" Height="37" Width="64" FontSize="18"/>
 
 
 

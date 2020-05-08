@@ -48,7 +48,7 @@ namespace GenerowanieRekordówDoBazy
                 allLists.KrajeIdList.Add(krajelistLastId);
                 KrajToFilleTable.Add(kraj);
             }
-            allLists.KrajeList.Clear();
+             if(ileRekordów > 0) allLists.KrajeList.Clear();
             insertObjectToDatabase.InsertKraje(KrajToFilleTable);
 
             
@@ -67,7 +67,7 @@ namespace GenerowanieRekordówDoBazy
                 allLists.GatunkiIdList.Add(gatuneklistLastId);
                 GatunekToFilleTable.Add(gatunek); 
             }
-            insertObjectToDatabase.InsertGatunki(GatunekToFilleTable);
+            if (ileRekordów > 0) insertObjectToDatabase.InsertGatunki(GatunekToFilleTable);
         }
 
         private void FillTablePodGatunek(uint ileRekordów)
@@ -83,7 +83,7 @@ namespace GenerowanieRekordówDoBazy
                 allLists.GatuenkPodgatunekList.Add(new KeyValuePair<int, int>(podgatunek.Id, podgatunek.Id_gatunek));
                 PodGatunekToFilleTable.Add(podgatunek);
             }
-            insertObjectToDatabase.InsertPodgatunki(PodGatunekToFilleTable);
+            if (ileRekordów > 0) insertObjectToDatabase.InsertPodgatunki(PodGatunekToFilleTable);
         }
 
         private void FillTableAdres(uint ileRekordów)
@@ -98,7 +98,7 @@ namespace GenerowanieRekordówDoBazy
                 allLists.AdresyIdList.Add(adreslistLastId);
                 AdresyToFilleTable.Add(Adresy);
             }
-            insertObjectToDatabase.InsertAdresy(AdresyToFilleTable);
+            if (ileRekordów > 0) insertObjectToDatabase.InsertAdresy(AdresyToFilleTable);
             allLists.MiejscowsciList.Clear();
             allLists.KrajeIdList.Clear();
         }
@@ -116,7 +116,7 @@ namespace GenerowanieRekordówDoBazy
                 allLists.NipHashSet.Add(Firma.NIP);
                 FirmyToFilleTable.Add(Firma);
             }
-            insertObjectToDatabase.InsertFirmy(FirmyToFilleTable);
+            if (ileRekordów > 0) insertObjectToDatabase.InsertFirmy(FirmyToFilleTable);
             allLists.NipHashSet.Clear();
         }
 
@@ -134,7 +134,7 @@ namespace GenerowanieRekordówDoBazy
                 allLists.UzytkownicyIdList.Add(maxindex);
                 UzytkownicyToFilleTable.Add(uzytkownik);
             }
-            insertObjectToDatabase.InsertUzytkownik(UzytkownicyToFilleTable);
+            if (ileRekordów > 0) insertObjectToDatabase.InsertUzytkownik(UzytkownicyToFilleTable);
             allLists.LoginyHashSet.Clear();
             allLists.EmaileHashSet.Clear();
         }
@@ -150,7 +150,7 @@ namespace GenerowanieRekordówDoBazy
                 allLists.PESELHashSet.Add(pracownik.PESEL);
                 UzytkownicyToFilleTable.Add(pracownik);
             }
-            insertObjectToDatabase.InsertPracownicy(UzytkownicyToFilleTable);
+            if (ileRekordów > 0) insertObjectToDatabase.InsertPracownicy(UzytkownicyToFilleTable);
             allLists.PracownicyEmaileHashSet.Clear();
             allLists.PESELHashSet.Clear();
 
@@ -165,7 +165,7 @@ namespace GenerowanieRekordówDoBazy
                 KlientRandomize klient = new KlientRandomize(++maxindex,allLists.ImionaiList, allLists.AdresyIdList);
                 KlienciToFilleTable.Add(klient);
             }
-            insertObjectToDatabase.InsertKlient(KlienciToFilleTable);
+            if (ileRekordów > 0) insertObjectToDatabase.InsertKlient(KlienciToFilleTable);
             allLists.ImionaiList.Clear();
             allLists.AdresyIdList.Clear();
         }
@@ -186,8 +186,11 @@ namespace GenerowanieRekordówDoBazy
                 ProduktyToFilleTable.Add(produkty);
                 AkcesorieToFilleTable.Add(akcesorie);                  
             }
-            insertObjectToDatabase.InsertProdukty(ProduktyToFilleTable,1);
-            insertObjectToDatabase.InsertAkcesoria(AkcesorieToFilleTable);
+            if (ileRekordów > 0)
+            {
+                insertObjectToDatabase.InsertProdukty(ProduktyToFilleTable, 1);
+                insertObjectToDatabase.InsertAkcesoria(AkcesorieToFilleTable);
+            }
         }
 
         private void FillTablePokarm(uint ileRekordów)
@@ -207,8 +210,11 @@ namespace GenerowanieRekordówDoBazy
                 ProduktyToFilleTable.Add(produkty);
                 PokarmyToFilleTable.Add(Pokarm);
             }
-            insertObjectToDatabase.InsertProdukty(ProduktyToFilleTable,7);
-            insertObjectToDatabase.InsertPokarmy(PokarmyToFilleTable);
+            if (ileRekordów > 0)
+            {
+                insertObjectToDatabase.InsertProdukty(ProduktyToFilleTable, 7);
+                insertObjectToDatabase.InsertPokarmy(PokarmyToFilleTable);
+            }
         }
 
         private void FillTablePokarmGatunek(uint ileRekordów)
@@ -222,7 +228,7 @@ namespace GenerowanieRekordówDoBazy
                 Posrednia_Pokarm_GatunekRandomize pokarmGatunek = new Posrednia_Pokarm_GatunekRandomize(++maxindex,allLists.PokarmyIdList,allLists.GatunkiIdList,CombinationInDb);
                 PokarmGatunekToFilleTable.Add(pokarmGatunek);
             }
-            insertObjectToDatabase.InsertPokarmGatunek(PokarmGatunekToFilleTable);
+            if (ileRekordów > 0) insertObjectToDatabase.InsertPokarmGatunek(PokarmGatunekToFilleTable);
             allLists.PokarmyIdList.Clear();
         }
 
@@ -239,7 +245,7 @@ namespace GenerowanieRekordówDoBazy
                 allLists.ZamowieniaIdList.Add(maxindex);
                 ZamowieniaToFilleTable.Add(zamowienie);
             }
-            insertObjectToDatabase.InsertZamowienia(ZamowieniaToFilleTable);
+            if (ileRekordów > 0) insertObjectToDatabase.InsertZamowienia(ZamowieniaToFilleTable);
         }
 
         private void FillTableUzytkownikFirma(uint ileRekordów)
@@ -252,7 +258,7 @@ namespace GenerowanieRekordówDoBazy
                 Posrednia_Uzytkownik_FirmaRadmoize uzytkownikFirma = new Posrednia_Uzytkownik_FirmaRadmoize(++maxindex,allLists.UzytkownicyIdList,allLists.ProducenciIdList,CombinationInDb);
                 UzytkownikFirmaToFilleTable.Add(uzytkownikFirma);
             }
-            insertObjectToDatabase.InsertUzytkownikFirma(UzytkownikFirmaToFilleTable);
+            if (ileRekordów > 0) insertObjectToDatabase.InsertUzytkownikFirma(UzytkownikFirmaToFilleTable);
             allLists.UzytkownicyIdList.Clear();
         }
 
@@ -273,8 +279,12 @@ namespace GenerowanieRekordówDoBazy
                 ProduktyToFilleTable.Add(produkty);
                 ZwierzeToFilleTable.Add(zwierze);
             }
-            insertObjectToDatabase.InsertProdukty(ProduktyToFilleTable,14);
-            insertObjectToDatabase.InsertZwierzeta(ZwierzeToFilleTable);
+            if (ileRekordów > 0) 
+            {
+                insertObjectToDatabase.InsertProdukty(ProduktyToFilleTable, 14);
+                insertObjectToDatabase.InsertZwierzeta(ZwierzeToFilleTable);
+            }
+               
             allLists.GatunkiIdList.Clear();
             allLists.PodGatunkiHashSet.Clear();
             allLists.ZwierzetaIdList.Clear();
@@ -291,7 +301,7 @@ namespace GenerowanieRekordówDoBazy
                 Posrednia_Produkt_ZamowienieRandomize produktZamowienie = new Posrednia_Produkt_ZamowienieRandomize(++maxindex, allLists.ProduktyIdList, allLists.ZamowieniaIdList, CombinationInDb);
                 ProduktZamowienieToFilleTable.Add(produktZamowienie);
             }
-            insertObjectToDatabase.InsertProduktZamowienie(ProduktZamowienieToFilleTable);
+            if (ileRekordów > 0) insertObjectToDatabase.InsertProduktZamowienie(ProduktZamowienieToFilleTable);
             allLists.ProduktyIdList.Clear();
             allLists.ZamowieniaIdList.Clear();
         }

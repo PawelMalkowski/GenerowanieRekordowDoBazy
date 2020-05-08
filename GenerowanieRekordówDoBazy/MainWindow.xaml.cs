@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -25,7 +26,10 @@ namespace GenerowanieRekordówDoBazy
         ValidationValue validationValue;
         volatile uint[] values;
         volatile uint Sum;
+        DateTime start;
         private readonly System.Windows.Threading.DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
+        private readonly System.Windows.Threading.DispatcherTimer dispatcherTimerClock = new System.Windows.Threading.DispatcherTimer();
+
         readonly PreperObjectsToInsert preperObjectsToInsert= new PreperObjectsToInsert();
 
         private static readonly Regex _regex = new Regex("[^0-9]+");
@@ -156,11 +160,13 @@ namespace GenerowanieRekordówDoBazy
                     }
                 }
                 Task.Run(() => InsertDb(ValuesToInsert, clear ,Lists));
-                
+                start = DateTime.Now;
                 dispatcherTimer.Tick += (sender, e) => DispatcherTimer_Tick(sender, e);
                 dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, 1);
                 dispatcherTimer.Start();
-
+                dispatcherTimerClock.Tick += (sender, e) => DispatcherTimer_TickClock(sender, e, start);
+                dispatcherTimerClock.Interval = new TimeSpan(0, 0, 0, 0, 10);
+                dispatcherTimerClock.Start();
             }
             else
             {
@@ -196,17 +202,26 @@ namespace GenerowanieRekordówDoBazy
                     progressBars[i].Value = (double)preperObjectsToInsert.insertObjectToDatabase.progress[i] / values[i] * 100;
                 }
             }
+
+            
              ((MainWindow)Application.Current.MainWindow).UpdateLayout();
             if (preperObjectsToInsert.isFinish)
             {
-                var endWindow = new OknoKońcowe(preperObjectsToInsert.insertObjectToDatabase.inserts);
+                TimeSpan time = start - DateTime.Now;
+                var endWindow = new OknoKońcowe(preperObjectsToInsert.insertObjectToDatabase.inserts, time);
                 endWindow.Show();
                 dispatcherTimer.Stop();
+                dispatcherTimerClock.Stop();
                 Fillbutton.IsEnabled = true;
                 ((MainWindow)Application.Current.MainWindow).Close();
             }
 
                
+        }
+        private void DispatcherTimer_TickClock(object sender,EventArgs e,DateTime start)
+        {
+            var time = DateTime.Now - start;
+            timeLabel.Content = time.Minutes + ":" + time.Seconds;
         }
 
         private void CheckData(Dictionary<string, uint> ValuesToInsert)
