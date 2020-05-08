@@ -7,22 +7,23 @@ namespace GenerowanieRekordówDoBazy
 {
     public class ValidationValue
     {
-        int maxValue = 24000;
+        readonly int maxValue = 24000;
         public List<string> Errors = new List<string>();
-        private string errorValueToHight = "Wartość dla tabeli {0} jest za duża (max {1})";
-        private string errorNotEnoughtCombination = "Nie można utworzyć odpowiedniej ilość kombinacji dla tabeli {0}  (max {1})";
-        private string errorNoValueToCreatForeignKey = "Aby utworzyć tabelę {0} należy utworzyć choć jeden rekor w tabeli {1}";
+        private readonly string errorValueToHight = "Wartość dla tabeli {0} jest za duża (max {1})";
+        private readonly string errorNotEnoughtCombination = "Nie można utworzyć odpowiedniej ilość kombinacji dla tabeli {0}  (max {1})";
+        private readonly string errorNoValueToCreatForeignKey = "Aby utworzyć tabelę {0} należy utworzyć choć jeden rekor w tabeli {1}";
         public ValidationValue(Dictionary<string,uint> valuesToInsert,bool clearDatabese, PreperAllListForRandomize allLists)
         {
             if (clearDatabese)
             {
                 CheckMaxValueWithRemoving(allLists, valuesToInsert);
-                CheckConnectionTableWithoutRemoving(valuesToInsert);
+                CheckConnectionTableWithRemoving(allLists,valuesToInsert);
+                CheckPossibilityToCreatForeignKeyWithRemoving(allLists, valuesToInsert);
             }
             else
             {
                 CheckMaxValueWithoutRemoving(allLists, valuesToInsert);
-                CheckConnectionTableWithRemoving(allLists, valuesToInsert);
+                CheckConnectionTableWithoutRemoving( valuesToInsert);
                 CheckPossibilityToCreatForeignKeyWithoutRemoving(allLists,valuesToInsert);
 
             }

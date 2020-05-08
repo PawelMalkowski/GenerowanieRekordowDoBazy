@@ -18,7 +18,8 @@ namespace GenerowanieRekordow.DAO_Randomize
             Email = RandomEmail();
             Adres = RandomAdres(Adresy);
         }
-        Random random = new Random();
+
+        readonly Random random = new Random();
         private string RandomImie(List<string> Imiona)
         {
             int r = random.Next(Imiona.Count);

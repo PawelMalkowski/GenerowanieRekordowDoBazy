@@ -19,7 +19,7 @@ namespace GenerowanieRekordow
                 sum += weights[i] * p;
             }
 
-            sum = sum % 10;
+            sum %= 10;
 
             if (sum > 0)
             {

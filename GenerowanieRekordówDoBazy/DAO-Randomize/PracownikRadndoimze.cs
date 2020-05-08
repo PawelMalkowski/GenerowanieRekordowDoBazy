@@ -11,13 +11,13 @@ namespace GenerowanieRekordow.DAO_Randomize
     class PracownikRandomize:Pracownik
     {
         bool mezczyzna = true;
-        Random random = new Random();
+        readonly Random random = new Random();
         int NumerImienia=0;
         public PracownikRandomize(int currentId, List<string> Imiona, List<int> Adresy, int Podzial, HashSet<string> Pesele,HashSet<string>Emaile)
         {
             Id = currentId;
             Nazwisko = RandomNazwisko();
-            PESEL = RandomPESEL(Podzial, Pesele); 
+            PESEL = RandomPESEL(Pesele); 
             Imie = RandomImie(Imiona,Podzial);
             DrugieImie= RandomImie(Imiona, Podzial);
             Telefon = RandomTelefon();
@@ -41,7 +41,7 @@ namespace GenerowanieRekordow.DAO_Randomize
             }
             return NazwaNazwisko;
         }
-        private string RandomPESEL(int Podzial,HashSet<string>Pesele )
+        private string RandomPESEL(HashSet<string>Pesele )
         {
             var a = new PeselGenerator();
             string Pesel;

@@ -18,10 +18,10 @@ namespace GenerowanieRekordow.DAO_Randomize
             Podgatunek = RandomPodgatunek();
             Ojciec = RandomOjciec(zwierzeta);
             Matka= RandomMatka(zwierzeta);
-            Waga = randomWaga();
-            Wiek = randomWiek();
-            Licencja = randomLicencja();
-            Transport = randomTransport();
+            Waga = RandomWaga();
+            Wiek = RandomWiek();
+            Licencja = RandomLicencja();
+            Transport = RandomTransport();
             Hodowla = RandomHodowla(Firmy);
             Dostawca = RandomDostawca(Firmy);
 
@@ -63,19 +63,19 @@ namespace GenerowanieRekordow.DAO_Randomize
             }
             return 0;
         }
-        private double randomWaga()
+        private double RandomWaga()
         {
             return (double)random.Next(1, 10000) / 100;
         }
-        private int randomWiek()
+        private int RandomWiek()
         {
             return random.Next(0, 100);
         }
-        private int randomLicencja()
+        private int RandomLicencja()
         {
             return random.Next(1,2);
         }
-        private int randomTransport()
+        private int RandomTransport()
         {
             return random.Next(1,2);
         }

@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:GenerowanieRekordówDoBazy"
         mc:Ignorable="d"
         ResizeMode="NoResize"
-        Title="MainWindow" Height="850" Width="400" Initialized="Window_Initialized">
+        Title="GeneratorRekordówDoBazy" Height="850" Width="400" Initialized="Window_Initialized">
     <Grid x:Name="GridApllication" Height="840" Background="#FF3B1B47">
         <Grid.RowDefinitions>
             <RowDefinition Height="47*"/>

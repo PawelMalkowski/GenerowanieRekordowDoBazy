@@ -12,14 +12,16 @@ namespace GenerowanieRekordówDoBazy
         public static OracleConnection connection;
         public DbConnection()
         {
-            connection = new OracleConnection();
-            connection.ConnectionString = "User Id=s95479;Password=s95479;Data Source = (DESCRIPTION = " +
+            connection = new OracleConnection
+            {
+                ConnectionString = "User Id=s95479;Password=s95479;Data Source = (DESCRIPTION = " +
                                         " (ADDRESS = (PROTOCOL = TCP)(HOST = 217.173.198.135)(PORT = 1522    ))" +
                                         " (CONNECT_DATA =" +
                                         " (SERVER = DEDICATED)" +
                                          " (SERVICE_NAME = orcltp.iaii.local)" +
                                         ")" +
-                                        ");";
+                                        ");"
+            };
 
             connection.Open();
         }
@@ -35,9 +37,11 @@ namespace GenerowanieRekordówDoBazy
         }
         public void Insertquery(string query)
         {
-            OracleCommand ins = new OracleCommand();
-            ins.CommandText = query;
-            ins.Connection = connection;
+            OracleCommand ins = new OracleCommand
+            {
+                CommandText = query,
+                Connection = connection
+            };
             ins.ExecuteNonQuery();
             
         }
@@ -215,8 +219,6 @@ namespace GenerowanieRekordówDoBazy
             String select = "select " + column1 + " as ForeignKey1, "+column2+ " as ForeignKey2 from " + table;
             sel.Connection = connection;
             sel.CommandText = select;
-            int value1 = 0;
-            int value2 = 0;
             using (OracleDataReader reader = sel.ExecuteReader())
             {
                 if (reader.HasRows)
@@ -228,8 +230,8 @@ namespace GenerowanieRekordówDoBazy
 
                         if (!reader.IsDBNull(index))
                         {
-                            value1 = Convert.ToInt32(reader.GetValue(index));
-                            value2 = Convert.ToInt32(reader.GetValue(index1));
+                            int value1 = Convert.ToInt32(reader.GetValue(index));
+                            int value2 = Convert.ToInt32(reader.GetValue(index1));
 
                             IntPair.Add(new KeyValuePair<int, int>(value1,value2));
                         }

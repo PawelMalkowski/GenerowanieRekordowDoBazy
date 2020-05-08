@@ -9,7 +9,7 @@ namespace GenerowanieRekordow.DAO_Randomize
 {
     class KrajRandomize:Kraj
     {
-        Random random = new Random();
+        readonly Random random = new Random();
         public int IdKraj;
         public KrajRandomize(int Currentid, List<string> Kraje)
         {

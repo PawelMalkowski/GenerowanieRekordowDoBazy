@@ -1,0 +1,20 @@
+﻿<Window x:Class="GenerowanieRekordówDoBazy.OknoKońcowe"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GenerowanieRekordówDoBazy"
+        mc:Ignorable="d"
+        Title="OknoKońcowe" Height="450" Width="800">
+
+    <Grid Background="#FF3B1B47">
+
+
+        <ScrollViewer Margin="20,69,25,70" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+            <TextBox x:Name="inserts" IsReadOnly="True"  TextWrapping="Wrap"  OpacityMask="Black" />
+        </ScrollViewer>
+
+        <Label Content="Wypełnianie bazy zakończyło się sukcesem" HorizontalAlignment="Left" Margin="165,21,0,0" VerticalAlignment="Top" FontSize="22" Height="43" Width="440" Foreground="#FF36EA01"/>
+        <Button x:Name="saveButton" Content="zapisz" HorizontalAlignment="Left" Margin="640,364,0,0" VerticalAlignment="Top" Height="35" Width="105" FontSize="16" Click="SaveButton_Click"/>
+    </Grid>
+</Window>

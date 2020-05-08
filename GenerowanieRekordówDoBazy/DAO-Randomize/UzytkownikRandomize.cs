@@ -10,7 +10,7 @@ namespace GenerowanieRekordow.DAO_Randomize
 {
     class UzytkownikRandomize:Uzytkownik
     {
-        Random Random = new Random();
+        readonly Random Random = new Random();
         public UzytkownikRandomize(int currentId, HashSet<string> Loginy, HashSet<string> Emaile)
         {
             Id = currentId;

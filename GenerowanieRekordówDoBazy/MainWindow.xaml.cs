@@ -25,9 +25,8 @@ namespace GenerowanieRekordówDoBazy
         ValidationValue validationValue;
         volatile uint[] values;
         volatile uint Sum;
-        
-        volatile PreperObjectsToInsert preperObjectsToInsert= new PreperObjectsToInsert();
-        volatile bool[] clearDbIsFinish = new bool[1];
+        private readonly System.Windows.Threading.DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
+        readonly PreperObjectsToInsert preperObjectsToInsert= new PreperObjectsToInsert();
 
         private static readonly Regex _regex = new Regex("[^0-9]+");
         private static bool IsTextAllowed(string text)
@@ -50,9 +49,14 @@ namespace GenerowanieRekordówDoBazy
         public MainWindow()
         {
             InitializeComponent();
+            this.Closing += new System.ComponentModel.CancelEventHandler(MainWindow_Closing);
         }
 
+        void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if(Fillbutton.IsEnabled==false) e.Cancel = true;
 
+        }
         private void Window_Initialized(object sender, EventArgs e)
         {
             TextBoxs = new TextBox[15] { Adres, Akcesorie, Firma, Gatunek, Klient, Kraj, Podgatunek, Pokarm, PokarmGatunek, ProduktZamowienie, UzytkownikFirma, Pracownik, Uzytkownik, Zamowienie, Zwierze };
@@ -82,7 +86,6 @@ namespace GenerowanieRekordówDoBazy
 
         private void Fillbutton_Click(object sender, RoutedEventArgs e)
         {
-            uint temporary = 0;
             bool isNumber = true;
             Dictionary<string, uint> ValuesToInsert = new Dictionary<string, uint>();
             foreach (var CurrentTextbox in TextBoxs)
@@ -90,7 +93,7 @@ namespace GenerowanieRekordówDoBazy
                 if (CurrentTextbox.Text == "") CurrentTextbox.Text = "0";
             }
             
-            if (!UInt32.TryParse(TextBoxs[0].Text, out temporary)) isNumber = false;
+            if (!UInt32.TryParse(TextBoxs[0].Text, out uint temporary)) isNumber = false;
             ValuesToInsert.Add("Adres", temporary);
             if (!UInt32.TryParse(TextBoxs[1].Text, out temporary)) isNumber = false;
             ValuesToInsert.Add("Akcesorie", temporary);
@@ -153,7 +156,7 @@ namespace GenerowanieRekordówDoBazy
                     }
                 }
                 Task.Run(() => InsertDb(ValuesToInsert, clear ,Lists));
-                System.Windows.Threading.DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
+                
                 dispatcherTimer.Tick += (sender, e) => DispatcherTimer_Tick(sender, e);
                 dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, 1);
                 dispatcherTimer.Start();
@@ -178,7 +181,7 @@ namespace GenerowanieRekordówDoBazy
         private void DispatcherTimer_Tick(object sender, EventArgs e)
         {
 
-            if (!preperObjectsToInsert.isFinish)
+            if (!preperObjectsToInsert.clearDbisFinish)
             {
                 GeneralProgress.Value = (double)preperObjectsToInsert.cleanStatus / Lists.ScriptList.Count() * 100.0;
                 
@@ -193,7 +196,17 @@ namespace GenerowanieRekordówDoBazy
                     progressBars[i].Value = (double)preperObjectsToInsert.insertObjectToDatabase.progress[i] / values[i] * 100;
                 }
             }
-            ((MainWindow)System.Windows.Application.Current.MainWindow).UpdateLayout();
+             ((MainWindow)Application.Current.MainWindow).UpdateLayout();
+            if (preperObjectsToInsert.isFinish)
+            {
+                var endWindow = new OknoKońcowe(preperObjectsToInsert.insertObjectToDatabase.inserts);
+                endWindow.Show();
+                dispatcherTimer.Stop();
+                Fillbutton.IsEnabled = true;
+                ((MainWindow)Application.Current.MainWindow).Close();
+            }
+
+               
         }
 
         private void CheckData(Dictionary<string, uint> ValuesToInsert)

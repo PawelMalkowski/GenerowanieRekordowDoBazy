@@ -9,7 +9,7 @@ namespace GenerowanieRekordow.DAO_Randomize
 {
     class ProduktRandomize:Produkt
     {
-        Random Random = new Random();
+        readonly Random Random = new Random();
         public ProduktRandomize(int Currentid)
         {
             Id = Currentid;

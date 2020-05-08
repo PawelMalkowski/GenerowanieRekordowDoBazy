@@ -41,8 +41,6 @@ namespace GenerowanieRekordówDoBazy
             List<string> ImionaList = new List<string>() ;
             string Imie;
             string[] Rozdzielone;
-            int liczba=0;
-           
             using (StreamReader sr = new StreamReader("Imiona.txt"))
             {
                 while (sr.Peek() >= 0)
@@ -51,8 +49,8 @@ namespace GenerowanieRekordówDoBazy
                     if (Imie == "") podzial = ImionaList.Count;
                     else { 
                     Rozdzielone= Imie.Split("\t");
-                    liczba = int.Parse(Rozdzielone[1]) / 100;
-                    ImionaList.AddRange(Enumerable.Repeat(Rozdzielone[0], liczba));
+                        int liczba = int.Parse(Rozdzielone[1]) / 100;
+                        ImionaList.AddRange(Enumerable.Repeat(Rozdzielone[0], liczba));
                     }
                 }
             }
@@ -61,7 +59,6 @@ namespace GenerowanieRekordówDoBazy
         }
         public string[] GetScriptList()
         {
-            List<string> ScriptList = new List<string>();
             string script;
             string[] Separate;
 

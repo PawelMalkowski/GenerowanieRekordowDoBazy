@@ -10,7 +10,7 @@ namespace GenerowanieRekordow
     class PeselGenerator
     {
 
-        private Random gen = new Random();
+        private readonly Random gen = new Random();
         DateTime RandomDay(int Rok)
         {
             DateTime start = new DateTime(Rok, 1, 1);

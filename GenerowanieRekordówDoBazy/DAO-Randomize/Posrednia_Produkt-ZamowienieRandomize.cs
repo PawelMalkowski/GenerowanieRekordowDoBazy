@@ -9,7 +9,7 @@ namespace GenerowanieRekordow.DAO_Randomize
 {
     class Posrednia_Produkt_ZamowienieRandomize: Posrednia_Produkt_Zamowienie
     {
-        Random random = new Random();
+        readonly Random random = new Random();
         public Posrednia_Produkt_ZamowienieRandomize(int currentId, List<int> firstList, List<int> secondList, HashSet<long> listCombinationAlreadyUs)
         {
             Id = currentId;

@@ -8,13 +8,14 @@ namespace GenerowanieRekordówDoBazy
         private static readonly DbConnection DbConnection = new DbConnection();
         private PreperAllListForRandomize allLists;
         public int cleanStatus=0;
+        public bool clearDbisFinish = false;
         public bool isFinish = false;
         public readonly InsertObjectToDatabase insertObjectToDatabase = new InsertObjectToDatabase();
         public void StartInsert(PreperAllListForRandomize Lists,bool clearDatabese, Dictionary<string,uint> ValuesToInsert)
         {
             allLists = Lists;
             if (clearDatabese) PreperEmptyDatabase();
-            isFinish = true;
+            clearDbisFinish = true;
             FillTableKraje(ValuesToInsert["Kraj"]);
             FillTableGatunek(ValuesToInsert["Gatunek"]);
             FillTablePodGatunek(ValuesToInsert["Podgatunek"]);
@@ -30,6 +31,7 @@ namespace GenerowanieRekordówDoBazy
             FillTableUzytkownikFirma(ValuesToInsert["UzytkownikFirma"]);
             FillTableZwierzeta(ValuesToInsert["Zwierze"]);
             FillTableProduktZamowienie(ValuesToInsert["Zamowienie"]);
+            isFinish = true;
           }
 
         private void FillTableKraje(uint ileRekordów)
@@ -37,7 +39,7 @@ namespace GenerowanieRekordówDoBazy
             HashSet<KrajRandomize> KrajToFilleTable = new HashSet<KrajRandomize>();
             int krajelistLastId;
             if (allLists.KrajeIdList.Count == 0) krajelistLastId = 0;
-            else krajelistLastId = allLists.KrajeIdList[allLists.KrajeIdList.Count - 1];
+            else krajelistLastId = allLists.KrajeIdList[^1];
             for (int i = 0; i < ileRekordów; ++i)
             {
                 KrajRandomize kraj = new KrajRandomize(++krajelistLastId,allLists.KrajeList);
@@ -57,7 +59,7 @@ namespace GenerowanieRekordówDoBazy
             HashSet<GatunekRandomize> GatunekToFilleTable = new HashSet<GatunekRandomize>();
             int gatuneklistLastId = allLists.PodgatuenkLastId;
             if (allLists.GatunkiIdList.Count == 0) gatuneklistLastId = 0;
-            else gatuneklistLastId = allLists.GatunkiIdList[allLists.GatunkiIdList.Count - 1];
+            else gatuneklistLastId = allLists.GatunkiIdList[^1];
             for (int i = 0; i < ileRekordów; ++i)
             {
                 GatunekRandomize gatunek = new GatunekRandomize(++gatuneklistLastId,allLists.GatunkiHashSet);
@@ -88,7 +90,7 @@ namespace GenerowanieRekordówDoBazy
         {
             int adreslistLastId;
             if (allLists.AdresyIdList.Count == 0) adreslistLastId = 0;
-            else adreslistLastId = allLists.AdresyIdList[allLists.AdresyIdList.Count - 1];
+            else adreslistLastId = allLists.AdresyIdList[^1];
             HashSet<AdresRandomize> AdresyToFilleTable = new HashSet<AdresRandomize>();
             for (int i = 0; i < ileRekordów; ++i)
             {
@@ -106,7 +108,7 @@ namespace GenerowanieRekordówDoBazy
             HashSet<FirmaRandomize> FirmyToFilleTable = new HashSet<FirmaRandomize>();
             int maxindex;
             if (allLists.ProducenciIdList.Count == 0) maxindex=0;
-            else maxindex=allLists.ProducenciIdList[allLists.ProducenciIdList.Count - 1];
+            else maxindex=allLists.ProducenciIdList[^1];
             for (int i = 0; i < ileRekordów; ++i)
             {
                 FirmaRandomize Firma = new FirmaRandomize(++maxindex,allLists.AdresyIdList, allLists.NipHashSet);
@@ -123,7 +125,7 @@ namespace GenerowanieRekordówDoBazy
             HashSet<UzytkownikRandomize> UzytkownicyToFilleTable = new HashSet<UzytkownikRandomize>();
             int maxindex;
             if (allLists.UzytkownicyIdList.Count == 0) maxindex=0;
-            else maxindex = allLists.UzytkownicyIdList[allLists.UzytkownicyIdList.Count - 1];
+            else maxindex = allLists.UzytkownicyIdList[^1];
             for (int i = 0; i < ileRekordów; ++i)
             {
                 UzytkownikRandomize uzytkownik = new UzytkownikRandomize(++maxindex,allLists.LoginyHashSet,allLists.EmaileHashSet);
@@ -174,7 +176,7 @@ namespace GenerowanieRekordówDoBazy
             HashSet<AkcesorieRandomize> AkcesorieToFilleTable = new HashSet<AkcesorieRandomize>();
             int maxindex;
             if (allLists.ProduktyIdList.Count == 0) maxindex = 0;
-            else maxindex = allLists.ProduktyIdList[allLists.ProduktyIdList.Count - 1];
+            else maxindex = allLists.ProduktyIdList[^1];
 
             for (int i = 0; i < ileRekordów; ++i)
             {
@@ -194,7 +196,7 @@ namespace GenerowanieRekordówDoBazy
             HashSet<PokarmRandomize> PokarmyToFilleTable = new HashSet<PokarmRandomize>();
             int maxindex;
             if (allLists.ProduktyIdList.Count == 0) maxindex = 0;
-            else maxindex = allLists.ProduktyIdList[allLists.ProduktyIdList.Count - 1];
+            else maxindex = allLists.ProduktyIdList[^1];
 
             for (int i = 0; i < ileRekordów; ++i)
             {
@@ -228,7 +230,7 @@ namespace GenerowanieRekordówDoBazy
         {
             int maxindex;
             if (allLists.ZamowieniaIdList.Count == 0) maxindex = 0;
-            else maxindex = allLists.ZamowieniaIdList[allLists.ZamowieniaIdList.Count - 1];
+            else maxindex = allLists.ZamowieniaIdList[^1];
             HashSet<ZamowieniaRandomize> ZamowieniaToFilleTable = new HashSet<ZamowieniaRandomize>();
             
             for (int i = 0; i < ileRekordów; ++i)
@@ -260,7 +262,7 @@ namespace GenerowanieRekordówDoBazy
             HashSet<ZwierzeRandomize> ZwierzeToFilleTable = new HashSet<ZwierzeRandomize>();
             int maxindex;
             if (allLists.ProduktyIdList.Count == 0) maxindex = 0;
-            else maxindex = allLists.ProduktyIdList[allLists.ProduktyIdList.Count - 1];
+            else maxindex = allLists.ProduktyIdList[^1];
 
             for (int i = 0; i < ileRekordów; ++i)
             {

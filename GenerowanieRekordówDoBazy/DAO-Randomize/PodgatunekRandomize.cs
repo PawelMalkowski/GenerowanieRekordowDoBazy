@@ -10,7 +10,7 @@ namespace GenerowanieRekordow.DAO_Randomize
 {
     class PodgatunekRandomize:Podgatunek
     {
-        Random random = new Random();
+        readonly Random random = new Random();
         public PodgatunekRandomize(int CurrentId, List<int> Gatunki, HashSet<String> Podgatunki)
         {
             Id = CurrentId;

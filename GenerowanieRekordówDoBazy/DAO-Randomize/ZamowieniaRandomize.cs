@@ -9,7 +9,7 @@ namespace GenerowanieRekordow.DAO_Randomize
 {
     class ZamowieniaRandomize:Zamowienia
     {
-        Random Random = new Random();
+        readonly Random Random = new Random();
         public ZamowieniaRandomize(int currenId,int Rok, List<int> Statusy, List<int> Przesylki)
         {
             Id = currenId;

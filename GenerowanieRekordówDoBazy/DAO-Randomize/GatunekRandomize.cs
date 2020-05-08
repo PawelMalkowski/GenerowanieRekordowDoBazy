@@ -9,8 +9,7 @@ namespace GenerowanieRekordow.DAO_Randomize
 {
     class GatunekRandomize:Gatunek
     {
-        
-        Random random = new Random();
+        readonly Random random = new Random();
         public GatunekRandomize(int cuurentId,HashSet<string> Gatunki)
         {
             Id = cuurentId;
