@@ -207,8 +207,8 @@ namespace GenerowanieRekordówDoBazy
              ((MainWindow)Application.Current.MainWindow).UpdateLayout();
             if (preperObjectsToInsert.isFinish)
             {
-                TimeSpan time = start - DateTime.Now;
-                var endWindow = new OknoKońcowe(preperObjectsToInsert.insertObjectToDatabase.inserts, time);
+                TimeSpan time =  DateTime.Now-start ;
+                var endWindow = new OknoKońcowe(preperObjectsToInsert.inserts, time);
                 endWindow.Show();
                 dispatcherTimer.Stop();
                 dispatcherTimerClock.Stop();
@@ -221,7 +221,7 @@ namespace GenerowanieRekordówDoBazy
         private void DispatcherTimer_TickClock(object sender,EventArgs e,DateTime start)
         {
             var time = DateTime.Now - start;
-            timeLabel.Content = time.Minutes + ":" + time.Seconds;
+            timeLabel.Content = time.Minutes + ":" + time.Seconds.ToString("D2");
         }
 
         private void CheckData(Dictionary<string, uint> ValuesToInsert)

@@ -1,4 +1,6 @@
 ﻿using GenerowanieRekordow.DAO_Randomize;
+using OracleInternal.SqlAndPlsqlParser.LocalParsing;
+using System;
 using System.Collections.Generic;
 
 namespace GenerowanieRekordówDoBazy
@@ -10,6 +12,7 @@ namespace GenerowanieRekordówDoBazy
         public int cleanStatus=0;
         public bool clearDbisFinish = false;
         public bool isFinish = false;
+        public string inserts;
         public readonly InsertObjectToDatabase insertObjectToDatabase = new InsertObjectToDatabase();
         public void StartInsert(PreperAllListForRandomize Lists,bool clearDatabese, Dictionary<string,uint> ValuesToInsert)
         {
@@ -31,8 +34,10 @@ namespace GenerowanieRekordówDoBazy
             FillTableUzytkownikFirma(ValuesToInsert["UzytkownikFirma"]);
             FillTableZwierzeta(ValuesToInsert["Zwierze"]);
             FillTableProduktZamowienie(ValuesToInsert["Zamowienie"]);
+            while (insertObjectToDatabase.taskRunning) ;
+            inserts = insertObjectToDatabase.inserts.ToString();
             isFinish = true;
-          }
+        }
 
         private void FillTableKraje(uint ileRekordów)
         {

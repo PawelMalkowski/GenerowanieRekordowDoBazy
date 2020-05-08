@@ -16,6 +16,7 @@
 
         <Label Content="Wypełnianie bazy zakończyło się sukcesem" HorizontalAlignment="Left" Margin="165,21,0,0" VerticalAlignment="Top" FontSize="22" Height="43" Width="440" Foreground="#FF36EA01"/>
         <Button x:Name="saveButton" Content="zapisz" HorizontalAlignment="Left" Margin="640,364,0,0" VerticalAlignment="Top" Height="35" Width="105" FontSize="16" Click="SaveButton_Click"/>
-        <Label x:Name="labelTime" Content="Czas: " Margin="20,381,660,23" FontSize="16"/>
+        <Label  x:Name="labelTime" Content="Czas: " HorizontalAlignment="Left" Margin="20,357,0,0" VerticalAlignment="Top" Height="51" Width="168" FontSize="18"/>
+
     </Grid>
 </Window>

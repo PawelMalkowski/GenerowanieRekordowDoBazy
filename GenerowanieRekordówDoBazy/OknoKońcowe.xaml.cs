@@ -19,11 +19,16 @@ namespace GenerowanieRekordówDoBazy
     /// </summary>
     public partial class OknoKońcowe 
     {
+        string toSave;
         public OknoKońcowe(string insertsString,TimeSpan insertTime)
         {
             InitializeComponent();
-            inserts.Text = insertsString;
-            labelTime.Content += insertTime.Minutes + ":" + insertTime.Seconds;
+            toSave = insertsString;
+            if (insertsString.Length < 400000) inserts.Text = insertsString;
+            else inserts.Text = "zbyt długi tekst";
+
+           labelTime.Content += insertTime.Minutes + ":" + insertTime.Seconds.ToString("D2");
+            
         }
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
@@ -35,7 +40,7 @@ namespace GenerowanieRekordówDoBazy
 
             if (dialog.ShowDialog() == true)
             {
-                File.WriteAllText(dialog.FileName, inserts.Text);
+                File.WriteAllText(dialog.FileName, toSave);
             }
         }
     }
