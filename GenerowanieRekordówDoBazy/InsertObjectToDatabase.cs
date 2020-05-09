@@ -482,10 +482,11 @@ namespace GenerowanieRekordówDoBazy
             Task.Run(() => AddTableToString(Allvalues, tabel, columns));
         }
 
-        public void InsertProduktZamowienie(HashSet<Posrednia_Produkt_ZamowienieRandomize> ProduktZamowienie)
+        public async void InsertProduktZamowienie(HashSet<Posrednia_Produkt_ZamowienieRandomize> ProduktZamowienie)
         {
+            
             string tabel = "POSREDNIA_PRODUK_ZAMOWIENIE";
-            inserts.Append("-- " + tabel + Environment.NewLine);
+            if (ProduktZamowienie.Count>0) inserts.Append("-- " + tabel + Environment.NewLine);
             string columns = "ID,ID_ZAMOWIENIE,ID_PRODUKT";
             HashSet<string> values = new HashSet<string>();
             HashSet<string> Allvalues = new HashSet<string>();
@@ -509,8 +510,8 @@ namespace GenerowanieRekordówDoBazy
             }
             dbConnection.InsertObjectToDatabaseTodatbase(tabel, columns, values);
             Allvalues.UnionWith(values);
-            while (taskRunning) ;
-            Task.Run(() => AddTableToString(Allvalues, tabel, columns));
+            while (taskRunning);
+            AddTableToString(Allvalues, tabel, columns);
         }
         private void AddTableToString(HashSet<String> Allvalues,string table, string columns)
         {

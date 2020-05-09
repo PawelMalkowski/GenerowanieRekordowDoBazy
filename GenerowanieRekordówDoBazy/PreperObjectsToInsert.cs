@@ -33,8 +33,7 @@ namespace GenerowanieRekordówDoBazy
             FillTableZamowienia(ValuesToInsert["Zamowienie"]); 
             FillTableUzytkownikFirma(ValuesToInsert["UzytkownikFirma"]);
             FillTableZwierzeta(ValuesToInsert["Zwierze"]);
-            FillTableProduktZamowienie(ValuesToInsert["Zamowienie"]);
-            while (insertObjectToDatabase.taskRunning) ;
+            FillTableProduktZamowienie(ValuesToInsert["ProduktZamowienie"]);
             inserts = insertObjectToDatabase.inserts.ToString();
             isFinish = true;
         }
@@ -53,8 +52,8 @@ namespace GenerowanieRekordówDoBazy
                 allLists.KrajeIdList.Add(krajelistLastId);
                 KrajToFilleTable.Add(kraj);
             }
-             if(ileRekordów > 0) allLists.KrajeList.Clear();
-            insertObjectToDatabase.InsertKraje(KrajToFilleTable);
+              allLists.KrajeList.Clear();
+            if (ileRekordów > 0) insertObjectToDatabase.InsertKraje(KrajToFilleTable);
 
             
         }
@@ -306,7 +305,7 @@ namespace GenerowanieRekordówDoBazy
                 Posrednia_Produkt_ZamowienieRandomize produktZamowienie = new Posrednia_Produkt_ZamowienieRandomize(++maxindex, allLists.ProduktyIdList, allLists.ZamowieniaIdList, CombinationInDb);
                 ProduktZamowienieToFilleTable.Add(produktZamowienie);
             }
-            if (ileRekordów > 0) insertObjectToDatabase.InsertProduktZamowienie(ProduktZamowienieToFilleTable);
+            insertObjectToDatabase.InsertProduktZamowienie(ProduktZamowienieToFilleTable);
             allLists.ProduktyIdList.Clear();
             allLists.ZamowieniaIdList.Clear();
         }
